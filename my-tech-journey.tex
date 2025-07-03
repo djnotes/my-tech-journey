@@ -1,0 +1,3657 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xparse}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{spverbatim}
+\usepackage{xepersian}
+\settextfont{Vazirmatn}
+
+\lstset{
+  breaklines=true,
+}
+
+
+\begin{document}
+
+\section{VS Code}
+\subsection{Remote Development with ftp-sync}
+The extension ftp-sync can be configured to connect to an FTP server and upload or download individual files from and to the current working directory or sync the whole directory to the server. 
+Once the extension is installed, you can configure the current directory to work in sync with the remote server.
+\begin{verbatim}
+{
+    "remotePath": "./",
+    "host": "example.com",
+    "username": "dev@example.com",
+    "password": "mypass12324",
+    "port": 21,
+    "secure": false,
+    "protocol": "ftp",
+    "uploadOnSave": false,
+    "passive": false,
+    "debug": false,
+    "privateKeyPath": null,
+    "passphrase": null,
+    "agent": null,
+    "allow": [],
+    "ignore": [
+        "\\.vscode",
+        "\\.git",
+        "\\.DS_Store"
+    ],
+    "generatedFiles": {
+        "extensionsToInclude": [
+            ""
+        ],
+        "path": ""
+    }
+}
+\end{verbatim}
+
+Commands:
+Various commands exist for this extension including the following.
+\begin{itemize}
+ \item ftp-sync: download file (current file)
+ \item ftp-sync: upload file (current file)
+\end{itemize}
+
+
+\section{Bash}
+\subsection{Write Multiple Lines to File from STDIN}
+To add multiline text at once to a text file, run the following command:
+
+\begin{lstlisting}
+cat <<EOF>>output.txt
+Line 1
+Line 2
+Line3
+EOF
+\end{lstlisting}
+
+\section{SSH}
+Material about configuring sshd server, opening and closing ports and other technical ssh stuff
+\subsection{Changing default SSH Port}
+1- Open /etc/ssh/\lstinline{sshd_config} or create a file /etc/ssh/\lstinline{sshd_config.d}/something.conf and add the following line inside the file:  
+\begin{verbatim}
+Port 23434(your desired port)
+\end{verbatim}
+2- Allow the selected port in firewall settings:  
+
+\subsection{USE SSH Connection as a Socks Proxy Server}
+You can pass the D option to ssh when establishing a connection to create an application-level proxy server
+on the local system. For example, the following connection allows your web browser to listen to a socks v5 proxy on port 12345 on the localhost:
+
+\begin{verbatim}
+ssh -D 127.0.0.1:12345 -p 22 user@yourserver.com
+\end{verbatim}
+
+\subsubsection{Convert Socks5 Proxy to HTTP Proxy using hpts}
+\begin{verbatim}
+# Install hpts: npm install -g http-proxy-to-socks
+# Forward socks traffic on port 9999 to port 1080 of the http proxy: hpts -s 127.0.0.1:9999 --host 192.168.1.86 -p 1080 
+\end{verbatim}
+
+
+\section{Installing VNC Server on CentOS 7}
+
+\begin{lstlisting}
+- Add vnc user
+sudo useradd -c "User johndoe created for VNC access" johndoe
+sudo passwd
+sudo yum groupinstall "Gnome Desktop" #Install Desktop environment
+#A reboot is recommended in a manual after desktop installation
+sudo yum install -y tigervnc-server
+#Make two copies of generic VNC service unit file under /etc/system/system
+sudo cp /lib/systemd/system/vncserver@.service /etc/systemd/system/vncserver@:4.service
+#Adding 4 to the file name means that VNC will run the service as a sub port of 5900 (Default VNC port), i.e. 5904
+#Configure vncserver@:1.Server, replacing <USER> with actual username
+#Add -geometry 1280x720 to the end of ExecStart
+sudo systemctl daemon-reload
+
+sudo systemctl enable vncserver@:1.service
+sudo firewall-cmd --permanent --zone=public --add-port=5901-5902/tcp #setup firewall rules
+
+#Now log in with vnc user through ssh and run vncserver to be asked to create a vnc password
+ssh johndoe@[server_ip]
+
+#READ MORE
+#https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-remote-access-for-the-gnome-desktop-on-centos-7
+#https://wiki.centos.org/HowTos/VNC-Server
+
+#SSH Tunneling: We can use SSH tunneling to secure our VNC connection. It works with port forwarding
+ssh -L 5900:server_ip:5901 johndoe@server_ip -N
+
+\end{lstlisting}
+
+\section{Installing AnyDesk on CentOS 7}
+
+\section{Installing php, httpd and mysql on CentOS 7}
+\begin{verbatim}
+yum install mariadb-server
+yum install httpd
+yum install php
+#Configure firewall
+sudo firewall-cmd --permanent --add-port=80/tcp
+sudo firewall-cmd --permanent --add-port=443/tcp
+sudo firewall-cmd --reload
+
+#Do it via iptables (https://www.digitalocean.com/community/tutorials/iptables-essentials-common-firewall-rules-and-commands)
+sudo iptables -A INPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+
+\end{verbatim}
+
+\section{Creating virtual hosts to host multiple sites on a single server}
+- Source: https://www.digitalocean.com/community/tutorials/how-to-set-up-apache-virtual-hosts-on-centos-7
+- Set up a directory for every site in /var/wwww and change ownership and set up 755 permission.
+- Create virtual host files:
+\begin{verbatim}
+sudo mkdir /etc/httpd/sites-available
+sudo mkdir /etc/httpd/sites-enabled
+#Create virtual host files
+sudo nano /etc/httpd/sites-available/example.com.conf
+
+#Configuring name server
+- Install bind and bind-utils
+- Add a master zone in /etc/named.conf
+- Create a file in /var/named/yourdomain.com.zone which you specified in named.conf
+- Restart named
+//Manual: https://www.digitalocean.com/community/tutorials/how-to-install-the-bind-dns-server-on-centos-6
+
+\end{verbatim}
+
+
+\section{PPTP on Centos 7}
+- First, enable EPEL:
+
+\section{Video Editing}
+
+\subsection{Create Music Video From Still Images}
+The following command creates a 10 second long music video using a picture and an audio:
+\begin{verbatim}
+ffmpeg -loop 1 -i IMG_1872\ 2.JPG -i ~/Music/elevate.mp3 -c:v libx264 -tune stillimage -c:a aac -b:a 192k -pix_fmt yuv420p -t 10 -shortest out.mp4
+
+\end{verbatim}
+
+Add custom subtitles to videos:
+- First convert srt to ass.
+ffmpeg -i sub.srt sub.ass
+- Burn the sub to video:
+ffmpeg -i video.mp4 -vf "ass=sub.ass" out.mp4
+- Apply effects
+ffmpeg -i input.mp4 -vf eq=brightness=0.06 -c:a copy output.mp4
+
+- To change subtitle bottom margin change the MarginV value
+
+\subsection{Download Part of a video with FFMPEG and Youtube-dl / Partial YouTube video download}
+Courtesy of https://unix.stackexchange.com/a/388148/142579
+
+  \begin{itemize}
+    \item Get video and audio streams: youtube-dl --skip-download --youtube-skip-dash-manifest -g https://youtu.be/D1dBPcO-Z6k
+    \item Pass the video and audio stream links to variables e.g. url1, url2
+    \item Download the desired portion with ffmpeg, mapping video and audio streams into the video: \lstinline{ffmpeg -ss 09:29 -i $url1 -ss 09:29 -i $url2 -t 8 -map 0:v -map 1:a -c:v libx264 -c:a aac part1.mp4}
+  \end{itemize}
+  
+  This gets only the audio. So, there must be a better solution. 
+
+  
+
+\subsection{Channel Mapping with FFmpeg}
+It is possible to map channels from a certain input stream from input file to a channel from a certain output stream in the output file. To do this, use this command:
+
+\begin{verbatim}
+  ffmpeg -i -map_channel [in_file_id].[in_stream_id].[in_channel_id]
+  For example the following example switches audio channels in a stereo file:
+  ffmpeg -i input-map_channel 0.0.0 -map_channel 0.0.1 output
+  //The following transforms stereo to mono
+  ffmpeg -i video.mkv -map_channel 0.1.0 out.mp3
+\end{verbatim}
+
+\paragraph*{Fast video conversionwith FFMPEG}
+To quickly convert videos without changing codec for audio and video, you should use acodec and vcodec options and pass 'copy' as codec, so that the streams are copied.
+
+\subsection{2-Pass Size-Oriented Video Encoding With FFMPEG}
+You can target a specific file size by using 2-pass encoding. 
+\begin{itemize}
+  \item Do the math. Calculate the video bitrate e.g. 200MB*8192/(8*60+27)
+  \item Pass 1 \lstinline{ffmpeg -i input -c:v libx264 -b:v 178k -pass 1 -an -f null /dev/null}
+  \item Pass 2 \lstinline{ffmpeg -i input -c:v libx264 -b:v 178k -pass 2 -c:a aac -b:a 64k out.mp4}
+\end{itemize}
+\subsection{Audio Visualization with FFMPEG}
+\lstinline{filter_complex} can be used to visualize audio.
+
+\begin{lstlisting}
+//Sample courtesy of https://lukaprincic.si/development-log/ffmpeg-audio-visualization-tricks
+ffmpeg -i INPUT_AUDIO.wav -filter_complex 
+"[0:a]avectorscope=s=480x480:zoom=1.5:rc=0:gc=200:bc=0:rf=0:gf=40:bf=0,format=yuv420p[v];
+ [v]pad=854:480:187:0[out]" 
+ -map "[out]" -map 0:a 
+-b:v 700k -b:a 360k 
+OUTPUT_VIDEO.mp4		
+\end{lstlisting}
+
+\section{Adding SSL to your site}
+- Go to sslforfree.com and download your keys.
+- Here, you'll know where to put your keys.   https://www.thesslstore.com/knowledgebase/ssl-install/apache-openssl-installation/
+\begin{verbatim}
+- The zip often contains three files: certificate.crt, private.key, and ca_bundle.crt (immediate certificates)
+\end{verbatim}
+
+
+Introduce your file names inside the file /etc/httpd/conf.d/ssl.conf (Inside your VirtualHost block)
+- Add a redirect inside apache VirtualHost block to redirect port 80 requests to port 443:
+        Redirect "/" "https://www.example.com/"
+- Specify the path to three files downloaded in zip via SSLCertificateFile, SSLCertificateKeyFile, SSLCACertificateFile.
+- Restart httpd
+
+\section{Free images}
+
+https://freepik.com
+https://pixabay.com
+https://freeimages.com
+http://www.freeimages.co.uk/index.htm
+
+\section{Increase audio volume with ffmpeg}
+- You can use a decimal value or a decibel value to change audio volume. To decrease volume, use negative value.
+\begin{verbatim}
+ffmpeg -i input.wav -filter:a "volume=0.5" output.wav
+ffmpeg -i input.wav -filter:a "volume=10dB" output.wav
+\end{verbatim}
+
+\section{Configuring NoMachine NX Server}
+First download their RPM from their website. Install it with rpm -i. The installer makes it usable right away once the installation is complete. So, you can connect from the client machine to the server easily.
+You can also do peak and RMS normalization to calculate the required offset.
+
+\section{How to create a systemd module}
+Let's say you want to create a service. The following example shows how you can create a service for MTProto Proxy:
+\begin{verbatim}
+  //Create a service file
+  nano /etc/systemd/system/MTProxy.service
+  //Edit the file as follows (service configuration)
+  [Unit]
+Description=MTProxy
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/MTProxy
+ExecStart=/opt/MTProxy/mtproto-proxy -u nobody -p 8888 -H 443 -S <secret> -P <proxy tag> <other params>
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
+//Reload daemons
+systemctl daemon-reload
+
+//Enable and start the proxy
+systemctl enable MTProxy.service
+systemctl start  MTProxy.service
+//optionally check for status
+systemctl status MTProxy.service
+\end{verbatim}
+
+
+
+\section{Containers and Kubernetes}
+Docker allows creation of run-time container images for applications. It lets you isolate an app and its dependencies from the system. So the app created with Docker will run on all systems.
+First file called Dockerfile is created specifying the app's dependencies that will be included in the image.
+Then the image is created with docker build. If you want to share the image, you must first tag it with docker tag. Then use docker push to publish it.
+\begin{verbatim}
+  docker run -p 4000:80 username/repo:tag
+\end{verbatim}
+Runs a docker from tag repo belonging to username on the 4000 port of the machine which is mapped to port 80 of the docker container.
+
+Dockerfile for a simple PHP web application
+\begin{verbatim}
+from php:7.2-cli
+COPY . /var/www
+\end{verbatim}
+
+
+\subsection{Autocompletion for kubectl and minikube}
+To enable bash autocompletion for kubectl and minikube, add:
+
+\begin{verbatim} 
+source <(kubectl completion bash)
+source <(minikube completion bash)
+\end{verbatim}
+
+\subsection{Docker Compose Tips}
+If you define a network, make sure you list it under all services. To initialize a docker database from scratch, you should remove any existing volumes
+
+
+Docker run parameters:
+\begin{verbatim}
+--rm - Destroy container once it exits
+-d - Run container in background
+-i - Run container in interactive mode
+--name - Give container a name
+-p [localpost]:[container-port] - Forward local port to container port
+\end{verbatim}
+
+\subsection{Install Podman on Ubuntu}
+On Ubuntu versions 20.10 and above, Podman can be installed using the default package manager:  
+\begin{verbatim}
+sudo apt-get install podman
+\end{verbatim}
+\subsection{Container Data Volumes}
+Docker Volumes:
+- Is used to persist data
+- Volumes can be shared among containers
+- Designate a volume with -v
+- Volumes can mount data from the host system
+
+\begin{verbatim}
+  docker run -d --name web1 -v `web1` /site:/var/www -v `pwd`/config:/etc/nginx/conf.d -p 8080:80 nginx
+  //This maps the path on the left to the container
+\end{verbatim}
+\begin{itemize}
+  \item[-] Responsible for storing data
+  \item[-] App containers can use data containers to store data
+\end{itemize}
+\paragraph*{Mount Data Volumes}
+\begin{verbatim}
+  docker create -v /etc/nginx/conf.d/ -v /var/www --name web_data busybox
+\end{verbatim}
+  Note that "docker ps" does not show this docker image, as it is only used for storing data.
+\begin{verbatim}
+  //This opens a editor container. This takes data from data container and overlays them to the new container. So, my /etc/nginx/conf.d in the ubuntu container is attached to the same data volume that web_data is using.
+  docker run --rm -ti --volumes-from web_data ubuntu /bin/bash
+\end{verbatim}
+\paragraph{Data Volumes Benefits}
+\begin{itemize}
+  \item [-] Data volumes are portable
+  \item [-] Data volumes are safer
+  \item [-] Data volumes separate app containers from data
+  \item [-] App containers stay small
+\end{itemize}
+
+\paragraph{Docker Links}
+\begin{itemize}
+  \item [-] Containers can see each other on the network in a discoverable fashion.
+  \item [-] Docker sets up a network on each node that is on.
+
+\end{itemize}
+
+
+\subsection{Managing Containers with Systemd}
+\begin{verbatim}
+
+[Unit]
+Description=Custom MariaDB Podman Container
+After=network.target
+
+[Service]
+Type=simple
+TimeoutStartSec=5m
+ExecStartPre=-/usr/bin/podman rm "mariadb-service"
+
+ExecStart=/usr/bin/podman run --name mariadb-service -v /opt/var/lib/mysql/data:/var/lib/mysql/data:Z -e MYSQL_USER=wordpress -e MYSQL_PASSWORD=mysecret -e MYSQL_DATABASE=wordpress --net host registry.access.redhat.com/rhscl/mariadb-102-rhel7
+
+ExecReload=-/usr/bin/podman stop "mariadb-service"
+ExecReload=-/usr/bin/podman rm "mariadb-service"
+ExecStop=-/usr/bin/podman stop "mariadb-service"
+Restart=always
+RestartSec=30
+
+[Install]
+
+WantedBy=multi-user.target
+\end{verbatim}
+
+\subsection{Deploy A Registry Server}
+You can create your own docker registry server. Registry is a stateless scalable server side application that lets you distribute your Docker images.
+Steps are as follows:  
+\begin{itemize}
+\item Create a directory called "certs" and copy .crt and .key files from CA there. 
+\item stop the registry if already running \lstinline{docker container run registry}   
+\item Restart the registry with options mounting the certs directory and with the 443 port.  
+
+\begin{verbatim}
+	 docker run -d \
+  --restart=always \
+  --name registry \
+  -v "$(pwd)"/certs:/certs \
+  -e REGISTRY_HTTP_ADDR=0.0.0.0:443 \
+  -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt \
+  -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key \
+  -p 443:443 \
+  registry:2  
+\end{verbatim}
+\item Docker clients can now push to and pull from this registry by specifying its domain name
+\begin{verbatim}
+  docker tag myimage myregistry.domain.com/myimage
+  docker push myregistry.domain.com/myimage
+  docker pull myregistry.domain.com/myimage   
+\end{verbatim}
+It is worth noting that you can also implement authentication for your registry so users have to log in before they gain access to the registry. 
+For more information on registry on registry, see \href{https://docs.docker.com/registry}{Configuring Docker Registries}
+\end{itemize}
+
+\subsection{Fix Docker Directory Permission Issues}
+
+Most of the time the issue with permission is due to Selinux rules. Simply change the context for docker to fix this:   \lstinline{chcon -Rvt svirt_sandbox_file_t /path/to/mounted/dir}
+
+\subsection{Docker Volumes}
+Docker volumes allow sharing data between several containers. They can also be backed up and restored later on another host. So that are the preferred way to persist data in Docker containers and services. Volumes are stored under \lstinline{/var/lib/docker/volumes}.
+
+\subsection{Wordpress Error: Cannot Create Directory}
+
+To fix the error when using Docker, you need to create a group with the same ID as in the host on the container and give rw permissions to the group while adding www-data (apache on debian) to the group (Like below):  
+
+\begin{verbatim}
+RUN groupadd -g 48 apache \
+    && usermod -G apache www-data \
+    && chmod  -R 775 .
+\end{verbatim}
+
+
+
+\subsection{Enable Communication with External Networks}
+The default network created with podman network create is bridge. In Docker, which acts similar to Podman, you have to enable IP forwarding to let containers connect to the outside world. 
+sysctl net.ipv4.conf.all.forwarding=1
+iptables -P FORWARD ACCEPT
+
+\subsection{Install ping}
+To install ping, run
+\begin{verbatim}
+	apt-get install iputils-ping
+\end{verbatim}
+
+
+\subsection{Communication between Pod Containers and the Host}
+First, specify port mapping on the pod when creating it. Then, when creating the container, expose the port to which you mapped the host port. 
+\begin{verbatim}
+	podman pod create --name test-pod -p 8080:80 
+podman run --rm -tid --name web --expose  80 --pod test-pod nginx
+
+\end{verbatim}
+
+\subsection{Expose Docker Apps via Reverse Proxy}
+The technology that allows you to expose your web services from an internal network to the outside world e.g. for security or load balancing is via a feature called reverse-proxy supported by popular web servers including Apache. A simple configuration follows:  
+
+\begin{verbatim}
+
+#Allows mapping of incoming request to backend server 
+ProxyPass "/"  "http://www.example.com/"
+
+#Allows modification of Location: headers from backend server to point to the reverse proxy
+ProxyPassReverse "/"  "http://www.example.com/"
+
+#In case there are several replicas of a service (container), they can be defined inside a balancer. 
+<Proxy balancer://cluster>
+	BalancerMember http://localhost:8080 #worker 1
+	BalancerMember http://localhost:8081 #worker 2
+	ProxySet lbmethod=bytraffice #How to distribute load
+</Proxy>
+
+ProxyPass "/" "balancer://cluster"
+ProxyPassReverse "/" "balancer://cluster"
+
+\end{verbatim}
+
+\subsection{How to Set Up A Containerized PHP-FPM Service}
+Based on the single-responsibility principle, we create a service for httpd and one for php-fpm. In the virtual host that I add to the httpd container, I specify a fcgi proxy to process php scripts. 
+\begin{verbatim}
+#This is the docker-compose.yml
+version: '3.0'
+services: 
+    fpm:
+        image: php:7.4-fpm
+        volumes: 
+            - .:/usr/local/apache2/htdocs
+    web:
+        build: .
+        ports:
+            - 8000:80
+        volumes:
+            - .:/usr/local/apache2/htdocs
+volumes:
+    webroot: {}
+
+#Here's the content of the virtual host file that we copy to the httpd container
+<VirtualHost *:80>
+    ServerAdmin webmaster@dummy-host2.example.com
+    DocumentRoot "/usr/local/apache2/htdocs"
+    ServerName fpm
+    ErrorLog "logs/fpm-error.log"
+    ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://localhost:9000/usr/local/apache2/htdocs/$1
+    DirectoryIndex /index.php index.php
+</VirtualHost>
+        
+#Then, we have the Dockerfile for the httpd container
+FROM httpd:2.4-alpine
+
+
+RUN apk update 
+
+RUN apk add nano php-fpm
+
+COPY . /usr/local/apache2/htdocs
+
+WORKDIR /usr/local/apache2/htdocs
+
+#Enable fcgi module
+RUN sed -i 's@^#LoadModule proxy_module modules/mod_proxy.so@LoadModule proxy_module modules/mod_proxy.so@' /usr/local/apache2/conf/httpd.conf
+RUN sed -i 's@^#LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so@LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so@' /usr/local/apache2/conf/httpd.conf
+
+#Enable virtual host
+RUN echo "Include conf/extra/vhost.conf" >> /usr/local/apache2/conf/httpd.conf
+COPY ./vhost.conf /usr/local/apache2/conf/extra
+
+
+
+\end{verbatim}
+
+\subsection{Set Up PHP-FPM with Apache (Easier Way)}
+Here we only copy a modified httpd.conf to the server that contains two important changes: First, it has enabled (uncommented \lstinline{mod_proxy and mod_proxy_fcgi}). Second, it has an IfModule block that sends php scripts to the fpm server. 
+\begin{verbatim}
+LoadModule proxy_module modules/mod_proxy.so
+LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so
+
+<IfModule proxy_module>
+    ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://fpm:9000/usr/local/apache2/htdocs/$1
+    DirectoryIndex /index.php index.php
+</IfModule>
+\end{verbatim}
+
+\subsection{Create a FPM-HTTPD-Alpine}
+Important: To run fpm and httpd on the same container, we need a process manager like supervisord. We put fpm and httpd conf files under supervisor directory. Also it is important to realize that using unix socket for fpm inside a container is hard due to permission complications. Use TCP connection on the local container instead. Here are the steps:  
+
+\begin{verbatim}
+#Dockerfile
+FROM httpd:2.4-alpine
+
+RUN apk update \
+&& apk add php php-fpm supervisor
+
+
+COPY httpd.conf /usr/local/apache2/conf/
+COPY supervisor/supervisord.conf /etc/supervisor/supervisord.conf
+COPY supervisor/conf.d/ /etc/supervisor/conf.d/
+
+
+COPY . /usr/local/apache2/htdocs
+
+
+
+CMD ["supervisord","-n", "-c", "/etc/supervisor/supervisord.conf"]
+
+
+
+
+#fpm.conf
+
+[program:php-fpm]
+command = php-fpm7 --nodaemonize 
+#--fpm-config /etc/php/7.0/fpm/php-fpm.conf
+autostart=true
+autorestart=true
+priority=5
+stdout_logfile=/dev/stdout
+stdout_logfile_maxbytes=0
+stderr_logfile=/dev/stderr
+stderr_logfile_maxbytes=0
+
+
+#apache.conf
+[program:apache]
+command=httpd -DFOREGROUND
+autostart=true
+autorestart=true
+priority=10
+startretries=1
+startsecs=1
+stdout_logfile=/dev/stdout
+stdout_logfile_maxbytes=0
+stderr_logfile=/dev/stderr
+stderr_logfile_maxbytes=0
+
+
+#Add this to httpd.conf
+<IfModule proxy_module>
+#      <FilesMatch "\.php$">
+#SetHandler  "proxy:unix:/var/run/fpm.sock|fcgi://127.0.0.1/"
+
+#    </FilesMatch>
+ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/usr/local/apache2/htdocs/$1
+
+DirectoryIndex /index.php index.php
+
+</IfModule>
+
+
+\end{verbatim}
+
+
+\subsection{Set Up a Containerized FPM Service for NGINX}
+The easiest way to do this is to create default.conf for nginx and then copy it over the default default.conf. The content will contain proxy configuration for the php scripts like this:  
+\begin{verbatim}
+#This must be present inside the server block
+    location ~ \.php$ {                                                
+       root           /usr/local/apache2/htdocs;                                           
+       fastcgi_pass   fpm:9000;                                 
+       fastcgi_index  index.php;                                      
+       fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;  
+       include        fastcgi_params;                                 
+    }   
+\end{verbatim}
+And Here's the docker-compose file:
+\begin{verbatim}
+version: '3.0'
+services: 
+    fpm:
+        image: php:7.4-fpm
+        volumes: 
+            - .:/usr/local/apache2/htdocs
+    web:
+        build: .
+        ports:
+            - 8000:80
+        volumes:
+            - .:/usr/local/apache2/htdocs
+volumes:
+    webroot: {}
+        
+\end{verbatim}
+
+\subsection{Generate Pod YAML with Podman}
+A Pod that is created manually with different environment variables and volumes, can be exported with as a yaml file to be later played by podman. 
+First, create your containers e.g. A wordpress container and a mariadb container with its database environment variables. Then generate the yaml file. 
+
+\begin{verbatim}
+#Create a pod. 
+podman pod create --name speechbot --publish 5678:5678,8080:80
+#First, create different containers in the pod. 
+#Here's an example: 
+#rabbitmq
+podman run --rm --name rabbitmq --pod=speechbot rabbitmq:3
+#app
+podman run --rm --name app -v `pwd`/session:/app/session -v `pwd`/log:/app/log --pod=speechbot registry.gitlab.com/powergame/speech-bot
+#db
+ podman run --rm --name db -e MYSQL_ROOT_PASSWORD=aUbX0#91 -e MYSQL_USER=speechbot -e MYSQL_DATABASE=speechbot -e MYSQL_PASSWORD=aUbX0#91 -v speech_dbvol:/var/lib/mysql --pod speechbot mariadb:10.5
+ 
+#Export the pod to a YAML
+podman generate kube speechbot > speechbot.yaml
+
+#Launch the pod again
+podman play kube speechbot.yaml
+
+\end{verbatim}
+
+\begin{verbatim}
+#Create YAML definition
+podman generate  kube mypod > mypod.yaml
+
+#Deploy using Pod yaml
+podman play kube mypod.yaml
+
+
+\end{verbatim}
+
+Some parts of the generated yaml can be removed as they are subject to change and might cause issues like some environment variables. 
+Note that localhost does not work for database in this case because by default the host name is the pod name in each container. Use the pod name instead of localhost to connect to the database. 
+
+\subsection{Debugging Containerized Python App with VSCode}
+You need ptvsd module installed in the container image. Then, you need to import the module in your python script and bind it to the address and port of the debugger. Then, in VS Code, you need to start debugging and then attach to remote debugger. For that, you will need a launch.json inside .vscode directory with this content:  
+
+\begin{lstlisting}
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Remote Attach",
+            "type": "python",
+            "request": "attach",
+            "port": 5678,
+            "host": "127.0.0.1",
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}",
+                    "remoteRoot": "/app"
+                }
+            ]
+        }
+    ]
+}
+\end{lstlisting}
+
+
+
+\subsection{Podman Remote Client on Mac}
+The following steps should be taken to set up Podman client on Mac to control a remote Podman instance running on a Linux machine. 
+\begin{itemize}
+	\item brew install podman
+	\item Enable podman systemD service on the Linux server ( systemctl --user enable --now podman.socket)
+	\item Enable linger for the socket to work when the user is not logged in (sudo loginctl enable-linger \lstinline{$USER})
+	\item Verify podman socket is listening (podman --remote info)
+	\item On the remote server, set up sshd server (sudo systemctl enable --now sshd)
+	\item Set up ssh on client (ssh-keygen) and then use mac's ssh-copy-id to copy the generated public key on to the remote server. 
+	\item Add a connection on server \lstinline{(podman system connection add baude --identity c:\Users\johndoe\.ssh\id_rsa ssh://john@192.168.122.1:1234/run/user/1000/podman/podman.sock)}
+	\item Test (podman info)
+	\item Podman is ready to manage containers remotely
+\end{itemize}
+
+
+\subsection{Set Up Build and Push CI Workflow for Docker Hub and GHCR}
+Create two files with .yaml extension under .github/workflows: One for GitHub Container Registry and one for Docker Hub. The build and push stages of the workflow for GitHub is slightly different from DockerHub and each one uses different actions. Before the workflows work, repo-level secrets need to be created in the project settings. In the following section, a working example of GitHub and Docker Hub is provided:  
+
+\begin{lstlisting}
+//Example to build and push to ghcr.io
+name: Docker Image CI
+
+on: [push]
+  # pull_request:
+  #   branches: [ master ]
+
+jobs:
+
+  Docker-Build-Push:
+
+    runs-on: ubuntu-latest
+        
+
+    steps:
+      - run: |
+          echo "The job was successfully triggered by the ${{ github.event_name }} event."
+          echo "Job is running on ${{ runner.os }} hosted by GitHub."
+          echo "Branch name is ${{ github.ref }}."
+          echo "Commit that triggered the job: $GITHUB_SHA"
+          
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - run: 
+          echo "${{ github.repository }} has been cloned to the runner." 
+
+      - name: Build and Push to GitHub Container Registry
+        uses: mr-smithers-excellent/docker-build-push@v5
+        with:
+          image: madelineproto
+          tags: latest
+          registry: ghcr.io
+          dockerfile: Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PAT }}
+
+
+\end{lstlisting}
+
+\begin{lstlisting}
+//Example to build and push to Docker Hub
+name: Docker Hub Image CI
+
+on: [push]
+
+jobs:
+  DockerHub-Build-Push: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Out Repository Code 
+        uses: actions/checkout@v2
+      - run: echo "${{ github.repository }} cloned to the runner."
+      
+      - name: Log In to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PAT }}
+
+      - name: Build and Push to Docker Hub
+        uses: docker/build-push-action@v2
+        with: 
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/madelineproto:latest
+
+\end{lstlisting}
+
+\subsection{Set Up Docker Action To Deploy Containers to Remote Server}
+This can be achieved using a couple of actions on GitHub. One such action 
+is djnotes/github-action-ssh-docker-compose@master. 
+It establishes a connection to remote server, deploys contents of the current directory
+to a directory on the remote server and then runs docker-compose inside it. 
+
+
+\begin{lstlisting}
+  #Example usage
+  - name: Deploy to server
+  uses: djnotes/github-action-ssh-docker-compose@master
+  with:
+    ssh_host: example.com
+    ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+    ssh_user: ${{ secrets.SSH_USER }}
+    docker_compose_prefix: myproj
+    ssh_port: 12345
+
+\end{lstlisting}
+Note that appropriate public/private key pairs must be created beforehand for a user on the 
+remote server and added to the remote server (only the public key must be added there) so that they can connect to the server with the private key provided in 
+GitHub secrets to the remote server.
+
+\subsection{Docker Compose with Podman Backend}
+Podman as of version 3.0 can be used as a backend for Docker Compose on Linux systems without needing to install Docker. As of Podman 3.2, it can be used with rootless Podman. 
+Setup to make docker-compose work with Podman. 
+=======
+In order to simply build and push to GitHub container registry, follow these steps:
+
+\begin{verbatim}
+echo $PAT | docker login ghcr.io --username phanatic --password-stdin
+
+docker tag app ghcr.io/phanatic/app:1.0.0
+
+docker push ghcr.io/phanatic/app:1.0.0
+
+\end{verbatim}
+
+
+\begin{itemize}
+	\item Install Podman
+	\item Install Docker Compose
+	\item Enable Podman socket: systemctl --user start podman.socket. The user switch allows running projects as non-root user 
+	\item Check connection: \lstinline{curl --unix-socket -H "Content-Type: application/json" http://localhost/_ping}
+	\item (Optional) You might have to do setenforce 0 (disable SELinux)
+	\item run docker-compose up inside the project directory
+	\item Set environmental variable \lstinline{DOCKER_HOST=unix:///run/user/1002/podman/podman.sock}
+	
+\end{itemize}
+
+\subsection{Convert Docker Compose to Kubernetes}
+To convert a docker-compose.yaml to Kubernetes components, you can use Kompose. Here are the steps:
+
+\begin{verbatim}
+1- Install kompose. On Mac it can be installed using brew.
+2. Run kompose convert
+3. Apply the generated files: kubectl apply -f .
+\end{verbatim}
+
+\subsection{Share a volume between two pods}
+First, do "minikube ssh" and create and volume /home/docker/pod-volume and then define share-pod pod and apply it. Then, delete it and create another pod check-pod and run it. 
+You will see the changes made by share-pod to the volume inside check-pod. 
+
+\begin{lstlisting}
+#Definition of share-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: share-pod
+  labels:
+    app: share-pod
+spec:
+  volumes:
+    - name: host-volume
+      hostPath:
+        path: /home/docker/pod-volume
+  containers:
+  - image: nginx
+    name: nginx
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - mountPath: /usr/share/nginx/html
+      name: host-volume
+  - image: debian
+    name: debian
+    volumeMounts:
+    - mountPath: /host-vol
+      name: host-volume
+    command: ["/bin/sh", "-c", "printf \"<b>Introduction to Kubernetes</b><br>\" >> /host-vol/index.html; sleep 60"]
+
+# Definition of check-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: check-pod
+  labels:
+    app: share-pod
+spec:
+  volumes:
+  - name: check-volume
+    hostPath:
+      path: /home/docker/pod-volume
+  containers:
+  - image: nginx
+    name: nginx
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - mountPath: /usr/share/nginx/html
+      name: check-volume
+
+\end{lstlisting}
+
+
+\subsection{Replace Docker with Podman on macOS}
+\begin{itemize}
+  \item Install podman with brew
+  \item Run "podman machine init myvm"
+  \item Run "podman machine start myvm"
+  \item Run "podman machine ssh myvm"
+  \item As of podman v4.1, host's home directory is mounted to the vm with the same name i.e. \lstinline{$HOME:$HOME}. This can be customized by padding the --volume option to the init command, e.g. \lstinline{podman machine init --volume $HOME/src:/src vm01}
+  \item Once podman machine is initialized, the Podman socket will be available at the \lstinline{unix:///Users/mhd/.local/share/containers/podman/machine/vm_name/podman.sock}. Export it as \lstinline{DOCKER_HOST} and add it to ~/.zshrc
+  \item Install docker-compose and run it. Both port forwarding and host volume bing mount will work in the compose file.
+  Example: If home directory is /home/user1, then the /home/user1 directory structure is also created inside the VM. 
+  Then from inside the vm, a directory or file from inside the mounted directory can be mounted into the container.
+
+\end{itemize}
+
+\subsection{Ingress}
+"An API object that manages external access to the services in a cluster, typically HTTP.
+Ingress may provide load balancing, SSL termination, and name-based virtual hosting"
+\subsubsection{Set-up on Minikube}
+\begin{itemize}
+	\item Enable Minikube Add-On \lstinline{minikube addons enable ingress}
+	\item Create simple web server \lstinline{kubectl create deployment demo --image=httpd --port=80}
+	\item Expose service: \lstinline{kubectl expose deployment demo}
+	\item Create Ingress resource: \lstinline{kubectl create ingress demo-localhost --class=nginx --rule="demo.localdev.me/*=demo:80"}
+	\item Forward a local port to ingress controller \lstinline{kubectl port-forward --namespace=ingress-nginx service/ingress-nginx-controller 8080:80}
+
+\end{itemize}
+
+\section{FFMPEG}
+\subsection{Converting a bunch of webm files to mp3 and changing extensions}
+The following code iterates over a group of webm files that end in [abcdxxx].webm, removes the [abcdxxx].webm part and adds the mp3 extension. 
+\begin{verbatim}
+for file in *.webm; do
+  filename="${file%.webm}"
+  filename="${filename% \[*\]}"
+
+  ffmpeg -i $file "aramam/$filename.mp3"
+done
+\end{verbatim}
+Note there is a space after filename because a typical file in this example looked like "İbrahim Tatlıses - Aramam [VNZuTrvXfPE].webm".
+
+This is done using the drawtext filter (According to https://stackoverflow.com/a/38728172/2009178):
+\begin{verbatim}
+ffmpeg -i "C:\test.mp4"
+ -vf "drawtext=text='Place text here':x=10:y=H-th-10:
+               fontfile=/path/to/font.ttf:fontsize=12:fontcolor=white:
+               shadowcolor=black:shadowx=5:shadowy=5"
+"C:\test-watermark.mp4"
+
+\end{verbatim}
+Use , to separate multiple filters, for example to use multiple text filters. 
+
+\paragraph{Adding colorbalance filters with ffmpeg}
+Modifies intensity of primary colors (red, green, and blue) of input frames.
+Options: rs, gs, bs (shadows); rm, gm, bm (midtones); rh, gh, bh (highlights)
+\begin{verbatim}
+//example
+ffmpeg -i input.mp4 -vf "colorbalance=rs=.3" output.mp4
+\end{verbatim}
+
+\paragraph{Color Levels}
+Adjust video input frames using levels.
+Options: rimin, gimin, bimin, aimin, etc.
+Example:
+\begin{verbatim}
+//Makde video output darker
+  ffmpeg -i input.mp4 -vf "colorlevels=rimin=0.058:gimin=0.058:bimin=0.058"
+\end{verbatim}
+\paragraph{Bash Code to Create Instagram Clips from one Video File}
+\begin{verbatim}
+  for ss in 0 60 120 180 240; do  ffmpeg -i input.mp4 -vf "colorlevels=rimin=0.058:gimin=0.058:bimin=0.058" -ss $ss -t 60 output$ss.mp4; done
+
+\end{verbatim}
+
+My command then becomes:
+\begin{verbatim}
+ffmpeg -i android-session-three-2019-04-12_14-12-56.mp4 -vf "drawtext=text='Mehdi Haghgoo ©':x=W-tw:y=H-th-th:fontsize=30:fontfile=./font.ttf"  out.mp4
+\end{verbatim}
+
+\section{On IELTS}
+\paragraph*{Types of Skills}
+The test covers skills in listening, reading, writing, and speaking.
+The IELTS website has good resources available for test takers at https://www.ielts.org/about-the-test/sample-test-questions covering different aspects of the test.
+
+
+
+\section{Creating a PHP extension}
+PHP extensions are often used to give PHP code the capabilities of native code (often written in C/C++).
+\paragraph*{Steps to create a PHP extension}
+
+
+\section{Working with Alsa Connections}
+First invoke aconnect -i and aconnect -o to see input-output ports and then connect the two ports you like with "aconnect in out".
+
+
+
+
+\section{Ardour}
+\subsection{Ardour MIDI Setup}
+\begin{verbatim}
+
+
+1- First add a MIDI track.
+2- When adding the MIDI track, for instrument, select Yoshimi-Multi.
+3- Then From the left pane (a bar where you see a Fader already), right-click the new instrument and select edit to change the sound.
+4- To be able to enter midi input via MIDI keyboard, right-click the track and select Inputs. Then connect midi_capture_1 to trackname_in.
+5- To record from keyboard to the track, right click the red record button and select Step-Entry.
+\end{verbatim}
+
+Make sure you install ALSA backend for Ardour (ardour6-backend-alsa package) to work easily with ALSA. 
+
+
+\section{VST Plugins}
+VST plugins are stored in the following locations on Linux:
+- /usr/local/lib64/lxvst
+- /usr/local/lib/lxvst
+- /usr/lib64/lxvst
+- /usr/local/lib/vst
+- etc.
+
+
+
+\section{Working With Carla}
+
+\paragraph{Play A WAV File}
+
+To play an audio file with Carla, add an Audio file plugin to the canvas. Then right-click the plugin and select connect->System. Switch to the transport tab and play the file!
+
+\section{ZMQ For PHP}
+There is a good documentation for this messaging framework on http://zguide.zeromq.org/php:all.
+\section{RabbitMQ for PHP}
+RabbitMQ is another messaging framework with composer bindings for PHP. It seems to be similar in function to ZMQ.
+
+\section{Building an OpenVPN Server}
+\begin{verbatim}
+  
+Steps are as follows:
+1- Install openvpn, easyrsa
+2- Check OpenVPN examples (/usr/share/doc/openvpn/examples)
+3- copy server.conf.gz to /etc/openvpn/server.conf
+4- In server.conf change:
+dh 2048.pem
+ push "redirect-gateway...." //uncomment
+ push "dhcp-option DNS ..." //uncomment
+ push "dhcp-option DNS ..." //uncomment
+ user nobody
+ group nogroup
+5-
+   uncomment net.ipv4.ipv4_forward in /etc/sysctl.conf
+6- Firewall
+  use ufw
+  ufw allow ssh
+  ufw allow 1194/udp
+
+  ufw enable
+7- File /etc/default/ufw
+DEFAULT_FORWARD_POLICY = "ACCEPT"
+8- File /etc/ufw/before.rules
+Add nat rules
+:POSTROUTING ACCEPT [0.0]
+-A POSTROUTING -s 10.8.0.0/8 -O eth0 -j MASQUERADE
+COMMIT
+
+9- Create Keys
+certificate authority
+cd /usr/share/easy-rsa
+cp -r /usr/share/easy-rsa /etc/openvpn
+mkdir /etc/openvpn/easy-rsa/keys
+vi /etc/openvpn/easy-rsa/vars
+export KEY_COUNTRY = "US" #Edit
+export KEY_...
+export KEY_NAEM = "server" #Remember this
+10- Create pem file
+openssl dhparam -out /etc/openvpn/dh2048.pem  2048
+11- cd /etc/openvpn/easy-rsa
+. ./vars
+
+./clean-all
+./build-ca
+./build-key-server server #server is what we gave in vars
+12.
+cd /etc/openvpn/easy-rsa/keys
+cp server.crt server.key ca.crt /etc/openvpn
+cd /etc/openvpn
+ls
+13- Start service
+service openvpn start
+
+14- Create client config and keys
+vi /etc/openvpn/server.conf
+uncomment duplicate_cn is not recommended
+15- cd /etc/openvpn/easy-rsa
+./build-key server
+16- Create a directory to manage client stuff
+mkdir ~/client
+cd /usr/share/doc/openvpn/examples/sample-config-files
+cp client.conf ~/client
+mv client.conf pineapple.ovpn
+keys needed:
+client.crt client.key ca.crt
+cd /etc/openvpn/easy-rsa/keys
+cp ca.crt client.crt client.key ~/client
+cd ~/client
+#Get ip server of server (vps ip)
+#in pineapple.ovpn
+remote [server ip] 1194
+#uncomment user nobody and user nogroup
+#ca ca.crt
+#cert client.crt
+#key client.key
+we add ssl/tls params to the file itself instead of pointing to their files (create a unified file)
+echo "<ca>" >> pineapple.ovpn
+cat ca.crt >> pineapple.ovpn
+echo "</ca>" >>pineapple.ovpn
+echo "<cert>" >> pineapple.ovpn
+cat client.crt >> pineapple.ovpn
+echo "</cert>" >>pineapple.ovpn
+
+echo "<key>" >> pineapple.ovpn
+cat client.key >> pineapple.ovpn
+echo "</key>" >> pineapple.ovpn
+
+ 17- Connect the client
+ scp pineapple.ovpn to client and use it to connect 
+
+
+\end{verbatim}
+
+\section{Add socks proxy to Gradle}
+
+Add the following to gradle.properties
+
+\begin{verbatim}
+  org.gradle.jvmargs=-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=9150
+
+
+
+\end{verbatim}
+
+\section{Free APIs}
+The following is a list of useful free APIs from RapiAPI:  
+\begin{verbatim}
+  REST Countries (Information about countries) : https://restcountries-v1.p.rapidapi.com/
+  Documentation: https://rapidapi.com/apilayernet/api/rest-countries-v1
+\end{verbatim}
+
+\section{Selinux Fixes}
+
+To use a non-default root for your website on a Selinux-enabled server, use the following commands:   
+\begin{verbatim}
+  # semanage fcontext -a -t httpd_sys_content_t "/srv/myweb(/.*)?"
+  # restorecon -R -v /srv/myweb #This will apply the new context to the files
+\end{verbatim}
+
+\section{Using web fonts}
+
+To specify web fonts in CSS files, first define them and then use the defined font family:  
+\begin{verbatim}
+@font-face{
+	font-family: "Vazir";
+	src: url("/wp-content/themes/twentytwenty/assets/fonts/vazir/Vazir.woff")
+}
+
+
+body{
+	font-family: "Vazir"
+}
+
+
+\end{verbatim}
+
+\section{WordPress}
+\subsection{Email Setup in CPanel}
+Email Reliability section can be used to set up suggested spf, dmarc and pkim records to ensure email deliverability.
+
+
+\subsection{Plugins and Themes}
+\subsubsection{Photos and Gallery}
+\begin{itemize}
+	\item PhotoSwipe
+	
+\end{itemize}
+
+\subsection{Elementor Header/Footer Hidden on Home Page}
+If display conditions are fine, then go to the edit mode of the page and then open page settings. Next, find Page Layout and set it to Default rather than Canvas or Full Width.
+\subsection{WoodMart Settings}
+\begin{itemize}
+ \item PHP time limit (done by calling \lstinline{set_time_limit() in wp-config.php}
+\end{itemize}
+\subsection{Add Custom Metaboxes using OptionTree plugin}
+\begin{verbatim}
+//Putting the following code in the theme's functions.php file creates a custom meta box for post types of ht_restaurant
+add_action( 'admin_init', 'custom_meta_boxes' );
+
+function custom_meta_boxes() {
+
+  $my_meta_box = array(
+    'id'        => 'my_meta_box',
+    'title'     => 'My Meta Box',
+    'desc'      => '',
+    'pages'     => array( 'ht_restaurant' ),
+    'context'   => 'normal',
+    'priority'  => 'high',
+    'fields'    => array(
+      array(
+        'id'          => 'background',
+        'label'       => 'Background',
+        'desc'        => '',
+        'std'         => '',
+        'type'        => 'background',
+        'class'       => '',
+        'choices'     => array()
+      )
+    )
+  );
+  
+  ot_register_meta_box( $my_meta_box );
+
+}
+\end{verbatim}
+\subsection{Create Login / Register Forms in Elementor}
+For this to work, you need to install the Actions Pack plugin, which will add different login-register related functionalities and supported fields. 
+
+\subsection{Add SMS Verification to Site}
+\begin{itemize}
+  \item Go to Quick send in smsir panel and create a template like 'Hello Code: \#Code\#'
+  \item Go to Digits settings and select Smsirverify as gateway and enter token (received from smsir) and pattern's id from smsir
+  \item In the sample sms section, enter the following:
+  ```
+  [{|name|:|code|,|value|:|{OTP}|}]
+  ```
+\end{itemize}
+\subsection{Customize WooCommerce Checkout Fields}
+here are the steps:
+\begin{itemize}
+	\item Install a code snippet plugin
+	\item Add a function to set or unset desired fields
+\end{itemize}
+Code to remove some fields:
+\begin{verbatim}
+	
+	
+	/**
+	Remove some fields
+	**/
+	function wc_remove_checkout_fields( $fields ) {
+		
+		// Billing fields
+		unset( $fields['billing']['billing_company'] );
+		unset( $fields['billing']['billing_email'] );
+		//     unset( $fields['billing']['billing_phone'] );
+		unset( $fields['billing']['billing_state'] );
+		//     unset( $fields['billing']['billing_first_name'] );
+		//     unset( $fields['billing']['billing_last_name'] );
+		unset( $fields['billing']['billing_address_1'] );
+		unset( $fields['billing']['billing_address_2'] );
+		unset( $fields['billing']['billing_city'] );
+		unset( $fields['billing']['billing_postcode'] );
+		// 	unset ($fields['billing']['billing_country']);  //billing country cannot be removed. However, WC can be configured to support only one country, thus it will be pre-filled in checkout field and not editable
+		
+		// Shipping fields
+		unset( $fields['shipping']['shipping_company'] );
+		unset( $fields['shipping']['shipping_phone'] );
+		unset( $fields['shipping']['shipping_state'] );
+		unset( $fields['shipping']['shipping_first_name'] );
+		unset( $fields['shipping']['shipping_last_name'] );
+		unset( $fields['shipping']['shipping_address_1'] );
+		unset( $fields['shipping']['shipping_address_2'] );
+		unset( $fields['shipping']['shipping_city'] );
+		unset( $fields['shipping']['shipping_postcode'] );
+		
+		// Order fields
+		unset( $fields['order']['order_comments'] );
+		
+		return $fields;
+	}
+	
+	
+	
+	add_filter( 'woocommerce_checkout_fields', 'wc_remove_checkout_fields' );
+	
+	
+\end{verbatim}
+\subsection{Add a Tag to Group of Products Programmatically}
+The following code adds the stone tag to all products whose names contain "Ring":
+```
+function add_stone_tag_to_rings() {
+    $args = array(
+        'post_type' => 'product', // Replace 'product' with your actual product post type
+        'posts_per_page' => -1,
+        's' => 'Ring'
+    );
+
+    $posts = get_posts($args);
+
+    foreach ($posts as $post) {
+        wp_set_object_terms($post->ID, 'stone', 'product_tag', true);
+    }
+}
+add_action('init', 'add_stone_tag_to_rings');
+```
+\subsection{Add Web Stories}
+List of plugins to be used for Web Stories:
+\begin{itemize}
+	\item Web Stories by Google (the main plugin for web stories) (web-stories)
+	\item Web Stories Widget for Elementor (shortcodes-for-amp-web-stories-and-elementor-widget)
+	\item MakeStories Helper (makestories-helper)
+	
+\end{itemize}
+\subsection{WP Troubleshooting}
+\begin{itemize}
+	\item \begin{verbatim}
+		Another update in progress (wp_update error): Delete core_update.lock from wp_options table 
+	\end{verbatim}
+	\item \begin{verbatim} favicon: <link rel="icon" type="image/x-icon" href="./favicon.ico" > \end{verbatim}
+	\item Upload gif files: Choose full size to preview Gif files by the upload 
+	\item WP downgrade: Use plugins like WP Downgrade or do Manual downgrade
+\end{itemize}
+\subsection{Installing Wordpress Plugins Directly Without FTP}
+For some reason Wordpress might not be able to writ*e to wp-content and in that case it will prompt you to enter FTP credentials. But, if you have set required permissions and want the direct method, add the following code to wp-config.php:
+\begin{verbatim}
+define('FS_METHOD', 'direct');
+\end{verbatim}
+
+\subsection{Add Wordpress Pages with Category}
+First go to Posts->Categories. Create Categories. 
+Next, go to pages, create a page. Add a Recent Posts block. For its category, select the category you want the articles be about. Done!
+
+\subparagraph{Fix 404 Error for Wordpress}
+Since apache is used by Wordpress, you need to make sure Apache's main configuration allows required directives in .htaccess files. Otherwise, those directives will have no effect. These are the settings you need to add inside the "<Directory /var/www>" block in the httpd.conf file:
+\begin{lstlisting}
+<Directory "/var/www">
+    AllowOverride All
+    Order allow,deny
+    # Allow open access:
+    Require all granted
+    allow from all
+</Directory>
+\end{lstlisting}
+
+\subsection{Create Child Themes}
+\begin{itemize}
+\item Create a directory named parentthemefoldername-child
+\item Create style.css with at least Theme Name and Template specified in the header
+\item Create functions.php and enqueue stylesheet.
+\item Activate the Child theme
+\item Add custom CSS in Customize 
+\end{itemize}
+
+\subsection{Enable Maintenance Mode via Code}
+Go to the end of functions.php in the theme and add the following code:
+
+\begin{verbatim}
+	
+	add_action('get_header', 'activate_wp_maintenance_mode');
+	
+	function activate_wp_maintenance_mode() {
+		
+		if (!is_user_logged_in()) {
+			// 		wp_die('<h1>در حالی بروزرسانی</h1><br />Website is updating. Try visiting later!');
+			require ABSPATH . '/maintenance.html';
+			wp_die();
+		}
+	}
+\end{verbatim}
+
+\section{Sending Files to Servers with RSYNC}
+
+\begin{verbatim}
+rsync -e "ssh -p 12345" -rzv  /home/someuser/somedir  johndoe@123.23.23.23:/var/www/mysite_home_dir
+#SSH port is specified with the p option. rzv specifies three options i.e. recursive,  compression and verbose output respectively. 
+\end{verbatim}
+
+\section{Moving Wordpress to Production}
+One thing that is very important is to change the \lstinline{option_value} in the \lstinline{wp_options} table to reflect your production site.  
+
+\begin{verbatim}
+UPDATE `wp_options` SET `option_value`='http://yoursite.production' WHERE `option_name`='siteurl' OR `option_name`='home';
+\end{verbatim}
+
+\subsection{Enable Pretty Links in WordPress}
+To allow creation of WordPress pretty links for posts e.g. http://mysite/myarticles instead of http://mysite/index.php?category=something, make sure: 
+\begin{itemize}
+  \item Apache web server with \lstinline{mod_rewrite} module is installed. 
+  \item FollowSymLinks option enabled 
+  \item FileInfo directives allowed (e.g. AllowOverride File Or AllowOverride All)
+  \item An .htaccess file (WordPress with write access can generate one)
+\end{itemize}
+
+Example: 
+\begin{lstlisting}
+  #Apache directives example (Can be added for individual virtual hosts)
+    <Directory /var/www/czir>
+    Options Indexes FollowSymLinks
+    AllowOverride All
+  </Directory>
+# .htaccess content (Permalink rewrite code)
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+# END WordPress
+\end{lstlisting}
+
+
+\section{How to Cut Areas Around Selected Parts In An Image}
+You might want to cut out areas around selected parts in an image in order to create an overlay to put over a video to hide parts of the video for privacy reasons for example. You can do this in GIMP by selecting the parts you want to keep by pressing Shift (allowing multiselection). Then right-click and select invert selection. This selects areas around your selection. Now, press Delete 
+and you're done!
+
+
+
+\section{Android}
+\subsection{Launch an Android App with ads}
+\begin{verbatim}
+# 1. See list of packages on devices
+adb pm list packages | grep -i YouTube
+
+# 2. Pull apk
+adb pull /product/app/YouTubeLeanback/YouTubeLeanback.apk 
+# 3. Find correct activity
+aapt dump badging YouTubeLeanback.apk | grep launchable-activity
+# 4. Launch component
+ adb shell am start -n com.google.android.youtube.tv/com.google.android.apps.youtube.tv.activity.ShellActivity      
+
+ 
+\end{verbatim}
+\subsection{Change default Emulator Dir in Windows}
+In device manager, select three-dots, click show on disk. Edit yourEmulator.ini, and change the value of "path" to \lstinline{D:\YourFolder\yourEmulator.avd}. Then, save and close the file. Remove yourEmulator.avd from its old path. Go to Android Studio and hit Start. Bingo!
+
+\subsection{Share A File in Android}
+Assuming there is a file stored in the internal or external storage, we can share it with the following steps:
+\begin{itemize}
+  \item Define a FileProvider subclass and specify it in AndroidManifest.xml
+  \item Define an XML file with root paths
+  \item Code for sharing file
+\end{itemize}
+\begin{verbatim}
+fun shareFile(context: Context, path: String) {
+            try {
+                val shareIntent = Intent(Intent.ACTION_SEND)
+                val uri = FileProvider.getUriForFile(context, FILE_PROVIDER_AUTHORITY, File(path))
+                shareIntent.setDataAndType(uri, context.contentResolver.getType(uri))
+                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+                val chooser = Intent.createChooser(shareIntent, context.getString(R.string.share_voice))
+                context.startActivity(chooser)
+            } catch(e: Exception){
+                Log.e(TAG, "share: ${e.message}")
+            }
+        }
+\end{verbatim}
+\subsection{Testing}
+Types of Android tests based on subject:
+- Functional, performance, accessibility, compatibility
+Types of Android tests based on scope:
+- Unit, medium, end to end
+
+\subsection{Deep Links}
+The following adb command allows us to launch an intent that will resolve to a deep link within our application. 
+ \begin{verbatim}
+ adb shell am start -W -a android.intent.action.VIEW -d "food://restaurants/keybabs"
+ \end{verbatim}
+ 
+ In order for this to work, you need to have an Activity with this scheme declared in its AndroidManifest.xml. The following shows how to declare such an intent: 
+ \begin{verbatim}
+             <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="food"/>
+                <data android:path="/restaurants/keybabs"/>
+            </intent-filter>
+ \end{verbatim}
+
+\subsection{Working with sdkmanager Tool}
+sdkmanager can be used to download different SDK components for Android without needing Android Studio. For example, you can download System Image for Android 34 using the following command:  
+\begin{lstlisting}
+cmdline-tools/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT --install "system-images;android-34;google_apis;x86_64" 
+\end{lstlisting}
+You can use this method to download missing components on a powerful server and then scp them to your local development system that is located in a restricted network. 
+
+\subsection{Jetpack Compose}
+\subsubsection{Material 3}
+
+
+\subsubsection*{Colors}
+\begin{itemize}
+  \item 5 key colors are extracted from a tonal pallette. 
+  \item User Generated Schemes: color scheme derived frm a user's wallpaper
+  \item Custom colors: Allows using dynamic color while preserving color roles essential to the app
+\end{itemize}
+  
+\subsubsection*{Typography}
+Typography has been simplified in Material 3 to consist of five sets of text styles, display, headline, title, body, and label. 
+Each one of these sets has 3 variants: large, medium and small. So a typography object takes 15 parameters to create a customized typography. Some of these parameters are displayLarge, displayMedium, displaySmall, headlineLarge, and so on. 
+
+\subsubsection{Testing}
+Compose tests are Instrumentation tests: they require an emulator or device to run. 
+\subsubsection{Dependencies}
+\begin{verbatim}
+- androidx.compose.ui:ui-test-junit4
+\end{verbatim}
+
+\subsubsection{Components}
+\begin{itemize}
+\item Finders
+\item Assertions
+\item Actions
+\item Matchers
+\end{itemize}
+
+\subsubsection{Compose Test Rule}
+Interface to Compose testing components. 
+You can use either createComposeTestRule or createAndroidComposeTestRule. The latter is more suitable when interacting with the Android framework, resources, etc. 
+
+\subsubsection{Avoid String Hardcoding}
+To avoid hard-cording strings in finders, get them from resources; for example for onNodeWithText("Clicks: 0"), use composeRule.activity.getString(R.string.clicks, 0)
+\subsubsection{Testing In Isolation}
+
+\subsubsection{Time Manipulation}
+
+\subsubsection{Prevent }
+
+
+\subsection{Date/Time Manipulation}
+\subsubsection{Get Unix Timestamp}
+\begin{lstlisting}
+Calendar.getInstance().time.time
+\end{lstlisting}
+\subsubsection{Convert Unix Timestamp to String Time}
+\begin{lstlisting}
+        val df = DateFormat.getDateInstance()
+        val time = df.format(Date(timestamp))
+\end{lstlisting}
+\subsection{Shared Element Transition With RecyclerView}
+There are important tips to keep in mind to make shared transition work with recycler views. For example, when a user clicks a list item, it expands and is shared between the two activities. To make this work, give the image clicked a unique transition name in the list adapter. Pass in the transition name to the activity via interface call. Then in the activity, send the transition name to the target activity or fragment that will display the detail view. The detail view must get the transition name from the received intent and set it on the shared image. 
+
+\subsection{Loading html files from Assets}
+Create assets folder inside the main folder. Add your html files along with css and javascript or img directories. The paths used in your web files must be relative e.g. href="./css/style.css". Then inside your Java (Kotlin) code, load the page with: 
+\begin{lstlisting}[language=Java]
+webview.loadUrl("file:///android_asset/file.html");
+\end{lstlisting}
+
+\subsection{Searching For Files}
+Files can be searched with recursive calls. The algorithm is simple. In the requested directory  we create an empty list. Every file that matches search criteria is added to the list. Folders are in turn searched by calling this function recursively which will return a list. We add that list to our list already created. Finally we return the list, which is the full list of results. 
+
+\subsection{Highlighting Text}
+TextViews support use of SpannableString which allows highlighting part of a String with arbitrary color. 
+
+\subsection{Moving Cursor in Text}
+In situations like search, one might need to select the current hit. Instead of trying to scroll to part of a text, you must use \lstinline{setSelection(start,stop)} to select the hit and the framework will automatically move the cursor and scroll to the word. 
+
+
+\subsection{Different Line Heights in English and Persian Text}
+Using a standard font family with the same font height for different languages will fix the issue of different line heights. 
+
+\subsection{Creating side line numbers for your text editor}
+You need to subclass TextView to add line numbers to the side. The custom drawing is done in onDraw. 
+
+\begin{verbatim}
+
+class LineEditText : EditText() {
+  val paint 
+  init{
+     paint = Paint()
+     paint.color = Color.RED
+     paint.textSize = 30f   
+  }
+  override fun onDraw(canvas: Canvas) {
+    var baseline1 = baseline
+    for (i 1..linenumber) {
+       canvas.draw("$i", 0, baseline1, paint)
+    }     
+  }
+}
+
+\end{verbatim}
+
+
+\subsection{View Binding}
+An effective and easier way of binding views defined in layouts to code. Steps to use: 
+\begin{verbatim}
+# Add this to android section in module level build.gradle
+buildFeatures {viewBinding true}
+#Layout name is turned into a class i.e. activity_main becomes ActivityMainViewBinding that has fields corresponding to views that have ids in the layout. Also it has getRoot() 
+#In the onCreate method, call inflate on the class and use getRoot() to get a view that will be passed to setContentView
+val binding = ActivityMainViewBinding.inflate(layoutInflater)
+setContentView(binding.root)
+
+\end{verbatim}
+
+\subsection{Cast Android Device to Linux and Control from There}
+Free Linux tool called scrcpy from Genymotion can be used for this purpose. 
+
+\subsection{Android Animations}
+\subsubsection{Spring Animation}
+For spring animation, either the final position or the spring force need to be specified. 
+Also, it is recommended to decide speeds with dp per second and then convert them to pixels per second as shown in the code.
+
+\begin{lstlisting}
+            val sa = SpringAnimation(binding.greeting, DynamicAnimation.Y)
+            sa.spring = SpringForce().apply{
+                dampingRatio = SpringForce.DAMPING_RATIO_HIGH_BOUNCY
+                stiffness = SpringForce.STIFFNESS_MEDIUM
+            }
+            val dpPerSec = -300f
+            val pxPerSec = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                dpPerSec, resources.displayMetrics)
+            sa.setStartVelocity(pxPerSec)
+            sa.setMinValue(-1000f)
+            sa.setMaxValue(1000f)
+            sa.start()
+\end{lstlisting}
+\subsection{MotionLayout}
+MotionLayout is a special layout made of ConstraintLayout that has motion capabilities. Its main tag is MotionLayout its constraints definition is in another file called scene that has a tag named MotionScene.
+Every motion scene is made of one or more transitions that occur between two or more states. Every state is represented by a ConstraintSet.
+There is also sectioned Constraint that allows overriding attributes when the attribute is not present. These include Layout, Transform, PropertySet, Motion, CustomAttribute. Sectioned constraints save us from replicating all the layout tags if only a few are to be overridden. 
+\subsubsection{Keyframe Tags}
+\begin{itemize}
+	\item KeyPosition: Controls position of view at specified time in motion
+	\item KeyAttribute: Modify attributes of view at specified time (e.g. allows implement add-to-card animation effect)
+	\item KeyCycle: Allows creating repeatable animations
+	\item KeyTimeCycle: 
+	\item KeyTrigger
+\end{itemize}
+
+
+\section{SQLITE}
+There are a couple of useful commands for working with Sqlite databases. Commands start with a dot. 
+
+\begin{verbatim}
+.open db_file //Load database file
+.dump //Show table values 
+.tables //List tables
+.databases
+\end{verbatim}
+
+
+
+
+
+
+\section{Apache}
+\subsection{Adding Free SSL to Apache}
+
+\begin{verbatim}
+#Unzip the zip file with three files private.key, certificate.crt and ca_bundle.crt.  
+#Create a virtual host and add the following keys to the virtual host:  
+
+SSLCertificateFile  /etc/letsencrypt/certs/codezombie.ir/certificate.crt
+SSLCertificateKeyFile /etc/letsencrypt/certs/codezombie.ir/private.key
+SSLCACertificateFile    /etc/letsencrypt/certs/codezombie.ir/ca_bundle.crt
+
+\end{verbatim}
+
+\subsection{Add SSL Redirect}
+In order to redirect all your users requesting http://yoursite.domain to the ssl version, add these rules to your virtualhost listening on the 80 port: 
+\begin{verbatim}
+
+RewriteEngine on
+RewriteCond %{SERVER_NAME} =www.codezombie.ir [OR]
+RewriteCond %{SERVER_NAME} =codezombie.ir
+RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+
+# method 2
+RewriteEngine on
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} ^(www\.)?codezombie\.ir$ [NC]
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [END,R=permanent]
+
+
+\end{verbatim}
+
+\section{MakeHuman}
+To use MakeHuman on Linux, grab its source code (github.com/makehumancommunity/makehuman, get pre-requisites (with pip as per README.md) and run makehuman/makehuman.py. Design and export your model as FBX with meter units and import them in Blender as FBX. 
+
+
+\section{Mail Server Suite (Postfix-Dovecot, Roundcube)}
+Although Postfix does not use mysql by default, it can be configured to store user accounts in a mysql database as mentioned in the very long tutorial (https://computingforgeeks.com/setup-mail-server-on-centos-with-postfix-dovecot-mysql-roundcube/).
+Prerequisites (required software): 
+sudo dnf install postfix postfix-mysql httpd vim policycoreutils-python-utils epel-release -y
+
+sudo dnf install -y php-common php-json php-xml php-mbstring php-mysql
+\subsection{Postfix}
+
+\begin{verbatim}
+#vim /etc/postfix/master.cf 
+submission inet n       -       n       -       -       smtpd
+  -o syslog_name=postfix/submission
+  -o smtpd_tls_security_level=encrypt   ## Comment this out if you have no SSL(not recommended)
+  -o smtpd_tls_auth_only=yes            ## Comment this out if you have no SSL(not recommended)
+  -o smtpd_sasl_auth_enable=yes
+  -o smtpd_recipient_restrictions=permit_sasl_authenticated,reject
+  -o milter_macro_daemon_name=ORIGINATINGmixed
+  -o smtpd_reject_unlisted_recipient=no
+  
+  #add these to the end of file
+  dovecot   unix  -       n       n       -       -       pipe
+    flags=DRhu user=vmail:vmail argv=/usr/libexec/dovecot/deliver -f ${sender} -d ${recipient}
+    
+    #vim /etc/postfix/main.cf
+    
+    sudo vim /etc/postfix/main.cf
+
+myhostname = mail.example.com
+
+mydomain = example.com   ## Input your unique domain here
+
+myorigin = $myhostname
+inet_interfaces = all
+inet_interfaces = localhost
+inet_protocols = all
+mydestination = $myhostname, localhost.$mydomain, localhost
+smtpd_recipient_restrictions = permit_mynetworks
+home_mailbox = Maildir/
+
+#SSL-Related stuff
+append_dot_mydomain = no
+biff = no
+config_directory = /etc/postfix
+dovecot_destination_recipient_limit = 1
+message_size_limit = 4194304
+smtpd_tls_key_file = /etc/postfix/ssl/yourkey.key           ##SSL Key
+smtpd_tls_cert_file = /etc/postfix/ssl/yourcertificate.crt  ##SSL Cert
+smtpd_use_tls=yes
+smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+smtpd_tls_security_level=may
+virtual_transport = dovecot
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+
+#Account storage settings
+virtual_mailbox_domains = mysql:/etc/postfix/database-domains.cf
+virtual_mailbox_maps = mysql:/etc/postfix/database-users.cf
+virtual_alias_maps = mysql:/etc/postfix/database-alias.cf
+
+
+#Create database config files for postfix_accounts
+#sudo vim /etc/postfix/database-domains.cf
+
+user = postfix_admin
+password = StrongPassword
+hosts = 127.0.0.1
+dbname = postfix_accounts
+query = SELECT 1 FROM domains_table WHERE DomainName='%s'
+
+#vim /etc/postfix/database-users.cf
+
+user = postfix_admin
+password = StrongPassword
+hosts = 127.0.0.1
+dbname = postfix_accounts
+query = SELECT 1 FROM accounts_table WHERE DomainName='%s'
+
+#vim /etc/postfix/database-alias.cf
+
+user = postfix_admin
+password = StrongPassword
+hosts = 127.0.0.1
+dbname = postfix_accounts
+query = SELECT Destination FROM alias_table WHERE Source='%s'
+
+
+#give ownership of database cf files to root:postfix and chmod them to 640
+
+#Create the database and table named in the mysql cf files
+CREATE TABLE `postfix_accounts`.`domains_table` ( `DomainId` INT NOT NULL AUTO_INCREMENT , `DomainName` VARCHAR(50) NOT NULL , PRIMARY KEY (`DomainId`)) ENGINE = InnoDB;
+CREATE TABLE `postfix_accounts`.`accounts_table` ( 
+    `AccountId` INT NOT NULL AUTO_INCREMENT,  
+    `DomainId` INT NOT NULL,  
+    `password` VARCHAR(300) NOT NULL,  
+    `Email` VARCHAR(100) NOT NULL,  
+    PRIMARY KEY (`AccountId`),  
+    UNIQUE KEY `Email` (`Email`),  
+    FOREIGN KEY (DomainId) REFERENCES domains_table(DomainId) ON DELETE CASCADE 
+) ENGINE = InnoDB;
+CREATE TABLE `postfix_accounts`.`alias_table` (
+    `AliasId` INT NOT NULL AUTO_INCREMENT, 
+    `DomainId` INT NOT NULL, 
+    `Source` varchar(100) NOT NULL, 
+    `Destination` varchar(100) NOT NULL, 
+    PRIMARY KEY (`AliasId`), 
+    FOREIGN KEY (DomainId) REFERENCES domains_table(DomainId) ON DELETE CASCADE
+) ENGINE = InnoDB;
+
+#Fill in account data
+INSERT INTO `postfix_accounts`.`domains_table` (DomainName) VALUES ('example.com');  
+INSERT INTO `postfix_accounts`.`accounts_table` (DomainId, password, Email) VALUES (1, ENCRYPT('Password', CONCAT('$6$', SUBSTRING(SHA(RAND()), -16))), 'tech@example.com');  
+INSERT INTO `postfix_accounts`.`accounts_table` (DomainId, password, Email) VALUES (1, ENCRYPT('Password', CONCAT('$6$', SUBSTRING(SHA(RAND()), -16))), 'jmutai@example.com');  
+INSERT INTO `postfix_accounts`.`alias_table` (DomainId, Source, Destination) VALUES (1, 'talktous@example.com', 'sales@example.com');
+
+
+#Create Roundcube database and user with permissions 
+
+#Check postmap agains mysql cf files 
+sudo postmap -q example.com mysql:/etc/postfix/database-domains.cf
+sudo postmap -q tech@example.com mysql:/etc/postfix/database-users.cf
+sudo postmap -q jmutai@example.com mysql:/etc/postfix/database-users.cf
+sudo postmap -q talktous@example.com mysql:/etc/postfix/database-alias.cf
+
+\end{verbatim}
+
+
+\subsection{Dovecot}
+
+The setup for dovecot is as follows: 
+\begin{verbatim}
+#Install dovecot dovecot-mysql
+#Add mail user and group
+sudo groupadd -g 6000 vmail 
+sudo useradd -g vmail -u 6000 vmail -d /home/vmail -m
+
+#Add or confirm the following in /etc/dovecot/dovecot.conf
+!include_try /usr/share/dovecot/protocols.d/*.protocol
+protocols = imap pop3 lmtp
+!include conf.d/*.conf
+!include_try local.conf
+
+#Confirm the following in /etc/dovecot/conf.d/10-auth.conf
+
+disable_plaintext_auth = yes
+auth_mechanisms = plain login
+!include auth-sql.conf.ext
+
+
+#Configure mysql aut in /etc/dovecot/conf.d/auth-sql.conf.ext
+
+passdb {
+  driver = sql
+  args = /etc/dovecot/dovecot-sql.conf.ext
+}
+userdb {
+  driver = static
+  args = uid=vmail gid=vmail home=/home/vmail/%d/%n/Maildir
+}
+
+#Create mail dir
+sudo mkdir /home/vmail/example.com
+
+#Create /etc/dovecot/dovecot-sql.conf
+driver = mysql
+connect = "host=127.0.0.1 dbname=postfix_accounts user=postfix_admin password=StrongPassword"
+default_pass_scheme = SHA512-CRYPT
+password_query = SELECT Email as User, password FROM accounts_table WHERE Email='%u';
+
+#Confirm the following in /etc/dovecot/conf.d/10-mail.conf
+mail_location = maildir:/home/vmail/%d/%n/Maildir
+namespace inbox {
+  inbox = yes
+}
+mail_privileged_group = mail
+mbox_write_locks = fcntl
+
+#Confirm the following in /etc/dovecot/conf.d/10-master.conf
+service imap-login {
+  inet_listener imap {
+    port = 143
+  }
+  inet_listener imaps {
+  }
+}
+service pop3-login {
+  inet_listener pop3 {
+    port = 110
+  }
+  inet_listener pop3s {
+  }
+}
+service lmtp {
+  unix_listener /var/spool/postfix/private/dovecot-lmtp {
+   mode = 0600
+   user = postfix
+   group = postfix
+  }
+}
+service auth {
+  unix_listener /var/spool/postfix/private/auth {
+    mode = 0666
+    user = postfix
+    group = postfix
+  }
+  unix_listener auth-userdb {
+   mode = 0600
+   user = vmail
+  }
+  user = dovecot
+}
+service auth-worker {
+  user = vmail
+}
+service dict {
+  unix_listener dict {
+  }
+}
+
+#Make vmail:vmail owner of /home/vmail
+#Configure dovecot permissions
+sudo chown -R vmail:dovecot /etc/dovecot 
+sudo chmod -R o-rwx /etc/dovecot 
+
+
+#Restart postfix service
+systemctl restart postfix
+
+#Open the following ports (via iptables or firewall-cmd):
+110/tcp, 143/tcp, 993/tcp, 995/tcp
+
+
+\end{verbatim}
+
+\subsection{RoundCube}
+
+\begin{verbatim}
+Put the roundcube unzipped folder in web root. Go to http://example.com/installer
+
+Make sure you select virtuser_query from the list of plugins to allow authentication against mysql db. 
+You'll be able to send and receive unencrypted messages this way, but SSL/TLS will require more tweaking. 
+
+#Sample conf.inc.php
+
+$config['default_host'] = 'localhost';  ## If SSL is confgured, use: $config['default_host'] = 'ssl//mail.example.com';
+$config['support_url'] = '';
+$config['defautl_port'] = 143;
+$config['smtp_server'] = 'localhost';   ## If SSL is confgured, use: $config['smtp_server'] = 'tls//mail.example.com'; 
+$config['smtp_port'] = 587;
+$config['smtp_user'] = '%u';
+$config['smtp_pass'] = '%p';
+$config['smtp_auth_type'] = 'LOGIN';
+$config['debug_level'] = 1;
+$config['smtp_debug'] = true;
+$config['plugins'] = array('virtuser_query');                                                                    
+$config['virtuser_query'] = "SELECT Email FROM postfix_accounts.accounts_table WHERE Email = '%u'"; ## Enables Roundcube to use authentication for virtual users for outgoing mail
+\end{verbatim}
+
+
+\section{Android Web Apps}
+\subsection{Chrome Custom Tabs}
+One way to create web apps. UI customizations is done via CustomTabsIntent and CustomTabsIntent.Builder. Performance improvements are done using CustomTabsClient to connect to the Custom Tabs service, and prepare Chrome to open a URL. 
+
+\subsection{TWA(Trusted Web Activity)}
+"If you are going to use first party web content in your app, you should use TWA" - Peter McLachlan (Google I/O 2019)
+Bubblewrap is a set of libraries and a commandline tool for Node.js that allows generating, building and running PWAs inside Android applications, using Trusted Web Activity.
+
+\begin{enumerate}
+	\item Lighthouse is a tool for improving the quality of web pages. 
+	\item To be installable, Chrome requires web manifest to declare at least two icon sizes 192x192 and 512x512
+
+\end{enumerate}
+\subsection{Meta tags and icon for iOS}
+Since, Safari does not support web app manifest yet, we add meta tags to achieve the purpose: 
+<!-- CODELAB: Add iOS meta tags and icons -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Weather PWA">
+<link rel="apple-touch-icon" href="/images/icons/icon-152x152.png">
+
+\subsection{Service Workers}
+Rich offline experiences, periodic background syncs, and push notifications are coming to the web. Service workers provide the technical foundation for these things. - Matt Gaunt
+
+\subsection{TWA Prerequisites}
+\begin{itemize}
+	\item Nodejs 10 or above (Bubblewrap)
+	\item Android phone or emulator
+	\item A browser that supports TWA. Chrome 72 and later
+	\item A website you want to view in the TWA
+\end{itemize}
+
+\subsection{Full Screen Capability in TWA}
+Fullscreen mode is only restricted to websites that you own. This verification is done via Digital Asset Links.
+
+\subsection{Generate Signing Keys with Keytool}
+The following code shows how to create a pkcs12-type keystore containing signing private/public keys for the signature.
+\begin{verbatim}
+keytool -genkey -alias signFiles -keystore mystore -storetype pkcs12
+\end{verbatim}
+
+\subsection{Create Asset Links File}
+Download Asset Link Tool from Play Store. Find your app from the list in the app. Copy the generate Digital Asset Link. Save it in assetlinks.json and upload to .well-known/assetlinks.json relative to website root. 
+
+
+\section{Amazon AWS}
+To run root commands in Redhat Linux instances, simply precede commands with sudo. 
+
+\subsection{Host Static Sites with AWS}
+In S3, create a bucket and then add static html/css files with public permissions. 
+
+
+\section{Blender}
+
+\subsection{Modify Materials with Node Editors}
+To modify the looks of your mesh, go to Shading Tab and play around with nodes that connect and contribute to the final material output. 
+\subsection{Python Scripting in Blender}
+First, enter scripting mode to see the effect of UI operations as code. You can copy the used code from console and modify it for your purposes. Scene objects can be accessed from the Scene Collection collection. 
+\begin{lstlisting}
+# Example to animate a group of 100 cubes by re-scaling them one at a time on different keyframes
+import bpy
+cubes = bpy.data.collections["Cubes"].objects
+offset = 0
+
+for cube in cubes:
+  cube.scale = [0,0,0]
+  cube.keyframe_insert(data_path="scale", frame = 1 + offset)
+  cube.scale = [1,1,5]
+  cube.keyframe_insert(data_path="scale", frame = 50 + offset)
+  cube.scale = [1,1,.5]
+  cube.keyframe_insert(data_path = "scale", 70 + offset)
+  cube.scale = [1,1,1]
+  cube.keyframe_insert(data_path = "scale", frame = 80 + offset)
+  offset += 1
+
+
+\end{lstlisting}
+
+
+
+\section{Unreal Engine}
+\subsection{Localization}
+First, enable Experimental in project settings. Then, go to Window->Localization Dashboard. Under Gather Text, select Gather From Text Files and Gather From Packages. For both, you need to specify the root folder of the game. Then, press Gather Text at the bottom. Now, you should be able to select Edit Translation for each language in the list. 
+
+\subsection{UE Game Install Location}
+OBB files might be installed in either of these locations: 
+\begin{verbatim}
+/sdcard/UE4Game
+/sdcard/obb/com.package.game
+/sdcard/Android/obb/com.package.game
+/sdcard/Download/obb/com.package.game
+\end{verbatim}
+
+\subsection{Publish Android Games with Data Files on Google Play}
+First, in the Android section under project settings, add offset numbers for armv7 and arm64 version so that they are not the same. Uncheck package game data into APK. After you build the game successfully, you have two apks and two data files. On Google Play Developer Console, you must upload the two apks and then for each APK, press the little plus button to add the relevant obb file as expansion file. This should do it and allow users of both v7 and x64 arm architectures download and install your game. Note that a release can have multiple apks. 
+
+\section{Android Audio Programming}
+\subsection{Oboe}
+Oboe is a C++ library that uses AAudio when available and falls back to OpenSL ES otherwise to implement realtime audio. 
+
+\section{Telethon}
+\begin{verbatim}
+#Create client
+from telethon import TelegramClient, events, sync
+client = TelegramClient('session',api_id, api_hash)
+client.start()
+
+#Send message and file
+client.send_message(entity, message) #entity can be @username
+client.send_file(entity, file)#file can be a string
+
+#Event handling. Here's a simple implementation
+@client.on(events.NewMessage(pattern = 'Hello'))
+async def handler(event):
+    await event.reply("Hello yourself")
+
+client.run_until_disconnected()
+
+
+\end{verbatim}
+
+\section{Python}
+\subsection{Installing packages}
+Packages are installed via pip or pip3. Make sure you use the --user flag to install the package only for the user not system-wide, which might render your system unstable. 
+\subsection{Use pip3 in the Virtual Environment}
+It is best practice to use pip in a virtual environment. It will keep all modules in one place and not break the local system. Virtual environments also multiple versions of the same module to exist in different environments. Here's how to create a virtual environment: 
+\begin{verbatim}
+python3 -m venv project_venv
+source project_venv/bin/activate #Activate env
+(project_venv) $ pip install module_name  #inside env
+(project_venv) $ deactivate #Deactivate
+\end{verbatim}
+
+
+\subsection{FFMPEG encoding using Python}
+First, make sure ffmpeg is installed on the system (or container)'s package manager. Then, use the python-ffmpeg wrapper library in Python. An example follows:  
+\begin{verbatim}
+                stream = ffmpeg.input(download_path)
+                stream = ffmpeg.output(stream, f"{flac_path}", ar = 16000, ac = 1)
+                stream = ffmpeg.overwrite_output(stream)
+                ffmpeg.run(stream)
+\end{verbatim}
+
+\subsection{Colab}
+Google Colab is a tool that allows combining executable code with text and html. Useful for training datasets or creating tutorials.
+
+\section{Composer}
+Composer version constraints can be specified using tags or branches. Tags are version like e.g. "lib": "1.2", while Branches are specified like "lib": "dev-branch".
+\subsection{How Composer Version Matching Works}
+Composer gets a complete list of available versions matching your version constraint from the VCS. Other packages in the project might require more specific versions. So, the version chosen by composer is not always the highest version. 
+
+\section{MadelineProto}
+A PHP library for creating Telegram apps/bots.
+\subsection{Starter Code}
+\begin{lstlisting}[language=PHP]
+use \danog\MadelineProto\API;
+use MediaBot\EventHandler;
+
+
+$api = new API(__DIR__ . '/data/session.madeline');
+$api->async(true);
+
+
+
+$api->loop(function() use ($api){
+yield $api->start();    
+yield $api->setEventHandler(MediaBot\EventHandler::class);
+});
+
+
+
+$api->loop();
+\end{lstlisting}
+
+\subsection{Logging}
+To log to a file, the following configuration is done on the constructor. 
+\begin{lstlisting}[language=PHP]
+#Define logger settings
+$settings = [];
+$settings['logger']['logger'] = \danog\MadelineProto\Logger::FILE_LOGGER;
+$logFile = __DIR__ . '/log/' . 'MadelineProto.log';
+
+$settings['logger']['logger_param'] = $logFile;
+
+
+$api = new API(__DIR__ . '/data/session.madeline', $settings);
+\end{lstlisting}
+
+
+\section{HTML/CSS}
+\subsection{How to display an element's children horizontally}
+\begin{lstlisting}
+.my-footer-wrapper{
+ display:inline-flex;
+}
+\end{lstlisting}
+
+\section*{Laminas API Tools}
+\subsection*{}{How to launch the development server}
+\begin{lstlisting}
+php -S 0.0.0.0:8080  -t public public/index.php
+\end{lstlisting}
+
+\section{Drupal}
+
+\subsection{Installing Drupal}
+Grab the installer zip and unzip. Run php development server in the root directory. Set up a database with username and password and enter its information in database fields of the Drupal setup. Note that there are different versions of Drupal e.g. Drupal 7 and Drupal 9. Drupal 9 seems significantly different from Drupal 7. 
+
+\section{React}
+\subsection{Add React to An Existing Web Page (Any Language)}
+React can be added to a website by including two scripts before the closing body tag. Also the script file in which the React behavior is defined must be included there. 
+
+\begin{verbatim}
+#Create like_button.js
+'use strict';
+
+const e = React.createElement;
+
+class LikeButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { liked: false };
+  }
+
+  render() {
+    if (this.state.liked) {
+      return 'You liked this.';
+    }
+
+    return e(
+      'button',
+      { onClick: () => this.setState({ liked: true }) },
+      'Like'
+    );
+  }
+}
+
+
+
+const domContainer = document.querySelector('#like_button_container');
+
+ReactDOM.render(e(LikeButton), domContainer);
+
+
+#Add a div tag in the body
+<div id="like_button_container"></div>
+
+
+#Add the scripts 
+  <!-- Load React. -->
+  <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>  
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+  <!-- Load our React component. -->
+  <script src="like_button.js"></script>
+  
+\end{verbatim}
+
+
+\section{Let's Encrypt TLS}
+\subsection{certbot-auto}
+To enable HTTPS for a website using certbot-auto, install it and run "certbot-auto". Then, choose Apache or NGINX depending on your server. Next, select the websites to enable TLS for. It automatically retrieves certificates and installs them for the selected domains. To renew, simply run "certbot-auto renew". This non-interactively renews all your certificates. The certficates and chains are often saved in \lstinline{/etc/letsencrypt/live/domain.ext/fullchain.pem} and the private key saved in \lstinline{/etc/letsencript/live/domain.ext/privkey.pem}
+
+
+\section{Flutter}
+\subsection{Loading Images}
+Images are loaded from assets. First put the images in a directory you specify in pubspec.yml. Then load them in the Widget's build method with the AssetImage() method. 
+
+\begin{verbatim}
+//Include all images (or a single file) under graphics in pubspec.yml. Path is relative to the location of pubspec.yml.
+  assets:
+- graphics/
+//Next, load image
+Widget build(BuildContext context) {
+	return Image(image: AssetImage('graphics/background.png'));
+}
+
+\end{verbatim}
+
+\subsection{Load Assets in Android}
+\begin{lstlisting}
+//To load assets in Java plugin code, use AssetManager
+AssetManager assetManager = registrar.context().getAssets();
+String key = registrar.lookupKeyForAsset("icons/heart.png");
+AssetFileDescriptor fd = assetManager.openFd(key);
+
+\end{lstlisting}
+
+\subsection{Updating Launch Icon}
+For Android, go to the res folder in the Android section and put the launcher icons as you would do for native Android apps. For iOS, go to \lstinline{.../ios/Runner} and put the icons with Apple-compliant sizes and filenames there. Could use appicon.co to generate iOS and Android icons. 
+
+\subsection{Add Launch Screen}
+for Android, go to \lstinline{res/drawable/launch_background.xml} and customize the existing layer-list. For iOS, go to \lstinline{ios/Runner/Assets.xcassets/LaunchImage.imageset} and drop in images named LaunchImage.png, LaunchImage@2x.png, etc. 
+
+
+\subsection{Opening Screens and Returning Results}
+
+You can open screens by using Navigator.of(context).pushNamed(). However, if you want to get a result from the opened screen, you should do it via async and Future. See below:
+
+\begin{lstlisting}
+
+_openLogin(BuildContext context) async {
+    final loginData = await Navigator.push(
+      context,
+    MaterialPageRoute(builder: (context) => LoginScreen()),
+    );
+    Scaffold.of(context)
+    ..removeCurrentSnackBar()
+    ..showSnackBar(SnackBar(content: Text('$loginData')));
+  }
+  
+  //To return data in the opened screen, do: 
+  Navigator.pop(context, data);
+
+\end{lstlisting} 
+
+\subsection{SnackBar in Flutter}
+Creating SnackBar is a bit tricky in Flutter as it requires a build context that often does not have a Scaffold on which to show the SnackBar. this can be solved by passing in a Builder as the body of the Scaffold, as follows:  
+
+\begin{lstlisting}
+
+\end{lstlisting}
+
+\subsection{Form Fields in Flutter}
+Form can be used to create a form. A GlobalKey should be defined inside the stateful widget to hold form state. This state can be used to validate the form. Form can contain a column with children like FormTextField. An example:  
+\begin{lstlisting}
+class _SignupScreenState extends State<SignupScreen>{
+
+  final _formKey = GlobalKey<FormState>();
+    @override
+  Widget build(BuildContext context){
+         return Scaffold (
+           appBar: AppBar(
+             elevation: 8.0,
+             leading: Padding(
+               padding: const EdgeInsets.all(8.0),
+               child: Image(image: Image.asset('assets/images/logo.png').image),
+             ),
+             title: Padding(
+               padding: const EdgeInsets.all(8.0),
+               child: Text('register'),
+             ),
+           ),
+           body: Builder(
+             builder: (context) {
+               return Form(
+                 key: _formKey,
+                 child: Column (
+                   mainAxisAlignment: MainAxisAlignment.start,
+                   children: [
+                     Row(
+                       children: [
+                         Padding(
+                           padding: _padding,
+                           child: SizedBox(
+                             width: 200,
+                             child: TextFormField(
+                               keyboardType: TextInputType.number,
+                               decoration: InputDecoration(
+                                   labelText: 'ref code',
+                                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(4.0))
+                               ),
+                               onChanged: _updateInputReferrer,
+                               validator: (value) {
+                                 if(value.isEmpty){
+                                   return 'enter ref code';
+                                 }
+                                 else {
+                                   return null;
+                                 }
+                               },
+                             ),
+                           ),
+                         ),
+                         RaisedButton(
+                           padding: _padding,
+                           onPressed: _loadRefCodeFromBank,
+                           child: Text('bank),
+                         ),
+                       ],
+                     ),
+                     Padding(
+                       padding: _padding,
+                       child: TextFormField(
+                         decoration: InputDecoration(
+                           labelText: 'phone num',
+                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(4.0)),
+                         ),
+                         keyboardType: TextInputType.phone,
+                         onChanged: _updateInputPhone,
+                         validator: (value){
+                           if(value.isEmpty){
+                             return 'enter phone num';
+                           }
+                           else {
+                             return  null;
+                           }
+                         },
+                       ),
+                     ),
+                     Padding(
+                       padding: _padding,
+                       child: TextFormField(
+                         obscureText: true,
+                         decoration: InputDecoration(
+                           labelText: 'password',
+                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(4.0)),
+                         ),
+                         onChanged: _updateInputPassword,
+                         validator: (value) {
+                           if(value.isEmpty){
+                             return 'enter password';
+                           }
+                           else {
+                             return null;
+                           }
+                         }
+                       ),
+                     ),
+
+                     Padding(
+                       padding: _padding,
+                       child: TextFormField(
+                         obscureText: true,
+                         decoration: InputDecoration(
+                           labelText: 'تکرار کلمه عبور',
+                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(4.0)),
+                         ),
+                         onChanged: _updateInputConfirmation,
+                         validator: (value) {
+                           if(value.isEmpty){
+                             return 'کلمه عبور را مجدد وارد کنید';
+                           }
+                           else {
+                             return null;
+                           }
+                         }
+                       ),
+                     ),
+                     RaisedButton(child: Text('ثبت نام'), onPressed: (){
+                       if(_formKey.currentState.validate()){
+                        _performSignup(context);
+                       }},
+                     ),
+                   ],
+                 ),
+               );
+             },
+           )
+         );
+
+  }
+
+  void _performSignup(context) {
+    print('Signing up...');
+
+    if(_inputPassword.isEmpty || _inputConfirmation.isEmpty || _inputPhone.isEmpty){
+      Scaffold.of(context).showSnackBar(_emptyFieldSnackBar);
+    }
+  }
+
+  void _loadRefCodeFromBank() {
+    print('Loading ref code from bank...');
+
+  }
+
+  void _updateInputPassword(String value) {
+    setState((){
+      _inputPassword = value;
+    });
+  }
+
+  void _updateInputConfirmation(String value) {
+    setState(() {
+      _inputConfirmation = value;
+    });
+  }
+
+  void _updateInputPhone(String value) {
+    setState((){
+      _inputPhone = value;
+    });
+  }
+
+  void _updateInputReferrer(String value) {
+    setState((){
+      _inputReferrer = value;
+    });
+  }
+}
+\end{lstlisting}
+It is important to add validators to form fields using the validator property. For each validator, return error string in case the validator fails, null otherwise. 
+When you need to validate the form, call formKey.currentState.validate(). 
+
+\section{Course Creation}
+\subsection{Requirements of a Successful Course}
+Every course must have well-thought script recorded with high quality to be used as voice-over for videos. 
+\begin{itemize}
+\item A good well-thought script
+\item Code for each section must be copied to a separate directory of the repository in an organized structure. Task and solution of the same lesson must have different directories. 
+\item Videos in which you need to show yourself must be recorded with a good camera. A white or bright background should be used. Nothing extra must in the video frame. 
+\item Voice must be recorded without noise to be later synced with screen captures. 
+\item Screen captures do not need to be step by step. They can be sped up to be in sync with the screen video. 
+\item You must not waste the student's time. Every second of an educational video counts and is there for a reason. 
+
+
+\end{itemize}
+
+\section{Sound and Music}
+\subsection{Tips From A Mix Enginner}
+The following are from a Fedora Magazine Article: 
+\begin{verbatim}
+#https://fedoramagazine.org/tune-up-your-sound-with-pulseeffects-speakers
+\end{verbatim}
+\begin{enumerate}
+\item    It’s almost always better to reduce a problem frequency than to boost other things. If you boost too much, your music can start to distort.
+\item    To fix excessive boominess, apply a high pass filter somewhere between 30 and 50 Hz. You may also want to try a bell EQ reduction somewhere between 40 and 100 Hz.
+\item    If you want to fix a boxy sound (reminds you of a cardboard box), try a bell EQ to reduce some frequencies between 300 and 500 Hz.
+\item    To fix a honky or nasal sound, try reducing some frequencies between 650 and 900 Hz.
+\item    If guitar/keyboard solos or vocals seem a bit muffled, try a gentle boost centered somewhere between 1 and 2 kHz to make them a little more present.
+\item    If your speakers sound overly tinny, apply a high shelf reduction starting somewhere between 4 and 8 kHz — start at a high frequency and dial back to where it’s helpful. To fix a dull sound, apply a high shelf boost using the same approach.
+\end{enumerate}
+
+
+\subsection{Passing onTap To Widgets}
+If you create a widget that has an onTap property, you can give the onTap property a type of VoidCallback. VoidCallback does not require parameters. This means the source sends callbacks with something like onTap: ()=>itemTapped(context) and the target (this widget) only has to set onTap:this.onTap. 
+
+\begin{verbatim}
+class MyScreen extends StatelessWidget{
+@override 
+Widget build(BuildContext context){
+  return CustomWidget(
+     //...,
+     onTap: ()=>_itemTapped(context),
+  );
+}
+   
+   class CustomWidget extends StatelessWidget{
+   final VoidCallback onTap;
+   CustomWidget(this.onTap);
+   
+     @override
+     Widget build(BuildContext context){
+       return Builder(
+         return Card(
+           onTap:this.onTap,         
+         );
+       );
+     }
+   }
+}
+\end{verbatim}
+
+\section{Build Telegram Bots with Python}
+\subsection{Pyrogram}
+\begin{verbatim}
+//Dockerfile
+FROM python:3
+
+RUN pip3 install tgcrypto pyrogram
+
+COPY . /app
+
+WORKDIR /app
+
+
+CMD ["python3", "bot.py"]
+
+//Script
+from pyrogram import Client,filters
+
+api_id = 111122
+api_hash = "7ddcf5900b4f83b6a01f5a51e7e31b10"
+
+with Client("my_account", api_id, api_hash) as app:
+    app.send_message("me", "Greetings from **Pyrogram**!")
+
+@app.on_message(filters.private)
+async def hello(client, message):
+    await message.reply_text(f"Hello {message.from_user.mention}")
+
+
+app.run()
+
+
+\end{verbatim}
+
+\subsection{Multi-Session App with Pyrogram}
+\begin{lstlisting}
+Ref: https://gist.github.com/pokurt/96afa69e86725850b2101099461609ed#file-multi-pyro-dict-py
+"""
+This sets up your Clients as a dict and starts them by iterating through all of them.
+Useful if you have a set of bots/accounts that all should do the same.
+"""
+
+from pyrogram import Client, filters, idle
+from pyrogram.handlers import MessageHandler
+
+my_apps = {
+    "app1": Client("app1"),
+    "app2": Client("app2"),
+    "app3": Client("app3"),
+    "app4": Client("app4"),
+    # and so on
+}
+
+
+def test(a, m):
+    m.reply("Response")
+
+
+for _, app in my_apps.items():
+    # Add a MessageHandler to each Client and start it
+    app.add_handler(MessageHandler(test, filters.command("test")))
+    app.start()
+
+
+idle()
+
+for _, app in my_apps.items():
+    app.stop()
+\end{lstlisting}
+
+\subsection{Using Multiple Session Files with The Same Account}
+You cannot use the same session file by several processes. Sometimes it is impossible to import one Pyrogram client into another module because of some circular dependency issue or something. To solve this, we can create several session files for the same account and access each of the sessions by a separate process. 
+
+\subsection{Using Async Code with Pyrogram}
+To use async code with Pyrogram, use "async" before functions and precede calls inside the function with "await". The for loop for async generators is preceded with async. 
+
+\subsection{Mariadb Database for Python}
+First install Mariadb Connector on the system and then import the mariadb module.
+It is important to commit after making changes to the database because mariadb disables auto-commit by default. 
+\begin{lstlisting}
+import mariadb
+from random import random
+
+# Establish a connection
+connection= mariadb.connect(user="test", database="test", host="localhost", password="test")
+
+cursor= connection.cursor()
+cursor.execute("INSERT INTO messages (message_id, text, chat_id) VALUES (?, ?, ?)", (random()*1000, "Test", random()*1000))
+connection.commit()
+
+cursor.execute("SELECT * FROM messages")
+
+# print content
+rows = cursor.fetchall()
+for row in rows:
+    print(*row, sep='\t')
+
+# free resources
+cursor.close()
+connection.close()
+
+\end{lstlisting}
+
+\subsection{Multi-Session Pyrogram}
+Sometimes it's necessary to make some calls using a user client as bots cannot call certain functions. Some functions include \lstinline{client.iter_chat_members(), chat.add_members() }, etc. 
+
+\section{Vagrant}
+
+Here's the steps to set up Vagrant on Fedora:
+\begin{itemize}
+\item Make sure virtualization is supported (lscpu | grep Virtualization)
+\item sudo dnf install qemu-kvm libvirt libguestfs-tools virt-install rsync
+\item sudo systemctl enable --now libvirtd
+\item sudo dnf install vagrant
+\item Add a box (vagrant box add fedora/32-cloud-base --provider=libvirt)
+\item Add vagrant file to the project
+\item Check file (vagrant status)
+\item vagrant up
+\item vagrant ssh (Connect to virtual machine)
+
+\end{itemize}
+
+
+\section{Python}
+\subsection{ORM Systems for Python}
+  \begin{itemize}
+  	\item SQLAlchemy
+  	\item Django ORM
+  \end{itemize}
+  
+  
+
+\subsection{Reloading A Module with reloader}
+There are two ways to reload a module via the reloader module. First, import and then call reloader.reload(module). Second, call reloader.reload(sys.modules['module-name']). Note that the second method uses string, but the first one uses the module name. 
+
+
+\subsection{Object Serialization/Deserialization}
+The pickle library can be used to pickle/unpickle arbitrary Python objects. Serialization can be done to a file object or returned. 
+
+\begin{verbatim}
+class student:
+  f_name = 'John'
+  l_name = 'Doe'
+ 
+import pickle
+obj = pickle.dumps(student)
+s_copy = pickle.loads(obj)
+print(f'Full name: {s_copy.f_name} {s_copy.l_name}')
+\end{verbatim}
+
+\subsection{Multi-Threading}
+
+Threads can be used to improve responsiveness of apps that accept input while other tasks run in the background. 
+To create a thread, a callable can be passed to a new instance of the Thread class (as the target parameter). The second way is to subclass the Thread class  and override the run method. 
+
+\begin{lstlisting}
+import threading, zipfile
+
+class AsyncZip(threading.Thread):
+    def __init__(self, infile, outfile):
+        threading.Thread.__init__(self)
+        self.infile = infile
+        self.outfile = outfile
+
+    def run(self):
+        f = zipfile.ZipFile(self.outfile, 'w', zipfile.ZIP_DEFLATED)
+        f.write(self.infile)
+        f.close()
+        print('Finished background zip of:', self.infile)
+
+background = AsyncZip('mydata.txt', 'myarchive.zip')
+background.start()
+print('The main program continues to run in foreground.')
+
+background.join()    # Wait for the background task to finish
+print('Main program waited until background was done.')
+\end{lstlisting}
+
+
+
+
+\section{OBS}
+\subsection{How to Record Desktop Output Audio On the Video}
+Add a new source and for its type select Audio Output Capture Device. 
+
+\subsection{How to Hide Background without Chroma Key}
+Select Video Capture device from the list of inputs and then filters. Add Luma Key filter and increase Luma Max Smooth.
+
+
+
+\section{Server Time and Date Settings}
+Time and date can be configured on Linux servers using the timedatectl utility. The following sets server's timezone to Tehran:
+\begin{verse}
+timedatectl set-timezone Asia/Tehran
+\end{verse}
+
+\section{Telegram}
+\subsection{Group and Channel Members}
+\begin{verbatim}
+add_chat_members(): To add a list of group or channel members
+get_chat_members(): Get chat members of a group or channel in which you are admin
+iter_chat_members(): Convenience method useful for getting all the members of a chat (group, supergroup, channel, etc.). Returns a generator that can be used in a loop to get individual members:   
+for member in app.iter_chat_members("chatusername", filter="recent"):
+   print(member.user.first_name)
+
+
+\end{verbatim}
+
+\section{Google Cloud Services}
+\subsection{Google Speech Recognition with Python}
+To set speech recognition, we need two services on Google: AppEngine to provide speech to text and Storage to allow uploading our files there before sending their URI to Speech Recognition API.  Most of the time, we will need a service key that is obtainable once billing is enabled for the project. This will give us a json key file, whose path must be exported to \lstinline{GOOGLE_APPLICATION_CREDENTIALS} environment variable. Google seems to like 16000 Hz FLAC encoded voice for recognition. So, a conversion might be required. 
+
+\begin{verbatim}
+#An example of speech recognition using the video enhanced model
+            client = speech.SpeechClient()    
+            transcript_file = f"{flac_path.strip('.flac').strip('.mp3')}.txt"
+
+            uri = await utils.upload_blob('vocal-collection', flac_path, flac_path.split('/')[-1]) 
+            logger.debug(f'File path: {flac_path}. Uri: {uri}')
+
+            # audio = speech.RecognitionAudio(content = content)
+            audio = speech.RecognitionAudio(uri = uri)
+            
+
+            #sampleRateHertz, encoding, and languageCode are important
+            config = speech.RecognitionConfig(                        
+                encoding = speech.RecognitionConfig.AudioEncoding.FLAC,
+            sample_rate_hertz = 16000,
+            language_code = 'fa-IR'
+            )
+
+            
+
+            operation = client.long_running_recognize(config = config, audio = audio)
+
+            logger.info('Waiting for the result...')
+            
+            response = operation.result()
+
+            # response = operation.result()
+
+            print(f"response: {response}")
+
+
+            for result in response.results:
+                print(u"Transcript: {}".format(result.alternatives[0].transcript))
+                logger.info(u"Transcript: {}".format(result.alternatives[0].transcript))
+                text_file = open(transcript_file, "a")
+                text_file.write(f"{result.alternatives[0].transcript}\n")
+                print("Confidence: {}".format(result.alternatives[0].confidence))
+                logger.info("Confidence: {}".format(result.alternatives[0].confidence))
+            await message.reply_document(document = transcript_file, caption = "متن حاصل از صوت")
+
+\end{verbatim}
+
+
+\subsection{Upload Files to Google Storage using Python}
+\begin{verbatim}
+
+#Create a bucket
+
+# Imports the Google Cloud client library
+from google.cloud import storage
+
+# Instantiates a client
+storage_client = storage.Client()
+
+# The name for the new bucket
+bucket_name = "my-new-bucket"
+
+# Creates the new bucket
+bucket = storage_client.create_bucket(bucket_name)
+
+print("Bucket {} created.".format(bucket.name))
+
+# Upload objects
+from google.cloud import storage
+
+
+def upload_blob(bucket_name, source_file_name, destination_blob_name):
+    """Uploads a file to the bucket."""
+    # bucket_name = "your-bucket-name"
+    # source_file_name = "local/path/to/file"
+    # destination_blob_name = "storage-object-name"
+
+    storage_client = storage.Client()
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(destination_blob_name)
+
+    blob.upload_from_filename(source_file_name)
+
+    print(
+        "File {} uploaded to {}.".format(
+            source_file_name, destination_blob_name
+        )
+    )
+
+\end{verbatim}
+
+
+\section{Good Emoji Support for VS Code on Linux}
+Go to settings and add Noto Emoji Color to the font family list. 
+
+
+\section{VPN Technologies}
+
+Here is a list of VPN technologies and implementation details for some of them. There are a lot of VPN technologies including V2Ray, Wireguard, and Shadowsocks. 
+\subsection{Set Up An OpenConnect VPN Server - Courtesy of LinuxBabe.com (Create OpenConnect VPN Server)}
+Take these steps to create an OpenConnect VPN server
+
+\subsection{Configuration}
+First, open 80, and 443 TCP ports and run the following to obtain certificates:  
+\begin{verbatim}
+certbot certonly --standalone --preferred-challenges http --agree-tos --email myemail@example.com -d mydomain.info
+
+\end{verbatim}
+
+You can create the VPN server as the only app using port 443 (standalone plugin), or if you have a web server running, you can use the webroot plugin of certbot to create certificate. 
+
+
+\begin{verbatim}
+#Edit /etc/ocserv/ocserv.conf and change auth to following
+auth = "plain[passwd=/etc/ocserv/ocpasswd]"
+
+#Apply 443 port for TCP and UDP
+tcp-port = 443
+udp-port = 443
+
+server-cert = /etc/letsencrypt/live/mydomain.com/fullchain.pem
+server-key =  /etc/letsencrypt/live/mydomain.com/privkey.pem
+
+max-clients = 128
+max-same-clients = 2
+try-mtu-discovery = true #Optimizes VPN performance
+#idle-timeout = 1200
+#mobile-idle-timeout = 1800
+default-domain = mydomain.com
+#Change ipv4 network from 192.168.x because it will cause problems 
+ipv4-network = 10.10.10.0
+ipv4-netmask = 255.255.255.0
+tunnel-all-dns = true
+
+#Comment out all route parameters 
+#route = 10.0.0.0/8
+
+systemctl restart ocserv
+
+
+\end{verbatim}
+
+\subsection{Create VPN Accounts}
+\begin{verbatim}
+#Run the following to (re)set password for username
+sudo ocpasswd -c /etc/ocserv/ocpasswd username 
+\end{verbatim}
+
+\subsection{Firewall Settings}
+\begin{verbatim}
+#enable IP Forwarding in /etc/sysctl.conf 
+net.ipv4.ip_forward = 1
+
+#enable IP forwarding for IPv6
+net.ipv6.conf.all.forwarding=1
+ 
+	#Run
+sysctl -p 
+
+#Configure IP masquerading to make server a virtual router for vpn clients
+ufw allow 22/tcp #Allow ssh traffic
+#Add the following rules to the end of /etc/ufw/before.rules
+#NAT table rules 
+*nat 
+:POSTROUTING ACCEPT [0:0]
+-A POSTROUTING -o eth0	-j MASQUERADE 
+COMMIT
+
+#allow forwarding for trusted network. Find the ufw-before-forward chain in this file and add the following 
+-A ufw-before-forward -s 10.10.10.0/24 -j ACCEPT
+-A ufw-before-forward -d 10.10.10.0/24 -j ACCEPT
+
+#Open 443 in firewall
+ufw allow 443/tcp
+ufw allow 443/udp
+
+#If you have a local DNS resolver and specified 10.10.10.1 as dns sedrver for VPN clients, then allow VPN clients to connect to port 53 with the following UFW rule. 
+ufw insert 1 allow in from 10.10.10.0/24
+#Then add the following to /etc/bind/named.conf.options
+allow-recursion {127.0.0.1; 10.10.10.0/24;};
+
+
+#Restart ufw and named
+
+\end{verbatim}
+
+\subsection{Firewall Settings (Fedora/CentOS)}
+\begin{lstlisting}
+#IP masquerade
+sudo firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="10.10.10.0/24" masquerade'
+sudo systemctl reload firewalld
+\end{lstlisting}
+
+\subsection{Enable Auto-Renew for Certificates}
+\begin{verbatim}
+#Edit crontab file
+crontab -e
+
+#Add job to the end of file 
+@daily certbot renew --quiet && systemctl reload ocserv
+
+\end{verbatim}
+
+\subsection{Starting VPN with Systemd}
+In order to automate VPN connection setup and restart, create /etc/systemd/system/openconnect.service with the following content:
+\begin{lstlisting}
+[Unit]
+  Description=OpenConnect VPN Client
+  After=network-online.target systemd-resolved.service
+  Wants=network-online.target
+
+[Service]
+  Type=simple
+  ExecStart=/bin/bash -c '/bin/echo -n password | /usr/sbin/openconnect vpn.example.com -u username --passwd-on-stdin'
+  KillSignal=SIGINT
+  Restart=always
+  RestartSec=2
+
+[Install]
+  WantedBy=multi-user.target
+
+\end{lstlisting}
+
+Then, you can start this service or enable it to start automatically on system startup. 
+
+\subsection{Enable IPv6 for VPN}
+In case your ISP supports IPv6, you will need to provide IPv6 addresses on your VPN server as well. Otherwise, the real location will be leaked rendering the VPN useless. First make sure IPv6 is enabled on your server and then uncomment relevant lines in /etc/ocserv/ocserv.conf.  
+\begin{itemize}
+	\item Check for IPv6 status with ip -6 addr
+	\item \lstinline{enable IPv6 if previous step failed with sysctl -w net.ipv6.conf.all.disable_ipv6=1}
+	\item uncomment ipv6-network=1.1.1.1 and ipv6-subnet-prefix=64 in ocserv.conf
+	\item restart ocserv
+\end{itemize}
+
+\subsection{Troubleshooting OpenConnect VPN}
+	
+	\subsubsection{Using custom ports}
+	Some countries may always or sometimes block ports other than 443. So, you might want to stick with 443 as ocserv connection port
+	\subsubsection{Enable debugging on the server}
+	 Stop the ocserv service and then run the following command to enable debugging: 
+	 \begin{verbatim}
+	 	sudo /usr/sbin/ocserv --foreground --pid-file /run/ocserv.pid --config /etc/ocserv/ocserv.conf --debug=10
+	 \end{verbatim}
+	
+
+
+
+\subsection{Creating an OpenVPN Server}
+Reference: https://proprivacy.com/guides/create-your-own-vpn-server. Note that OpenVPN Inc. no longer releases rpm packages of their software. So, we will have to build from tarball.
+\paragraph{Prerequisites}
+CentOS 7, A Domain
+
+\paragraph{Install OpenVPN}
+
+Install OpenVPN from EPEL.
+
+\paragraph{Configure OpenVPN}
+
+\paragraph{Generate Keys and Certificates}
+
+\paragraph{Routing}
+
+\paragraph{Starting OpenVPN}
+
+\paragraph{Configuring a client}
+
+
+\subsection{Set up a PPTP VPN on CentOS}
+https://1gbits.com/blog/install-pptp-vpn-centos-7
+
+\subsection{Setting Up IKEV2 VPN on Fedora}
+Source article: https://protonvpn.com/support/linux-ikev2-protonvpn.
+Note that strongswan is different from the ipsec package.
+First, you need to install the strongswan package. Next, download your VPN servers .der file to /etc/strongswan/ipsec.d/cacerts. Find the ipsec.conf file in /etc/strongswan/ipsec.conf and below "Add connections here" add the following, replacing test with your connection name and it-01* with your server:
+\begin{verbatim}
+conn test
+ left=%defaultroute
+ leftsourceip=%config
+ leftauth=eap-mschapv2
+ eap_identity=tester
+ right=it-01.protonvpn.com
+ rightsubnet=0.0.0.0/0
+ rightauth=pubkey
+ rightid=%it-01.protonvpn.com
+ rightca=/etc/ipsec.d/cacerts/protonvpn.der
+ keyexchange=ikev2
+ type=tunnel
+ auto=add
+\end{verbatim}
+
+Now, add the username and password to /etc/strongswan/ipsec.secrets:
+\begin{verbatim}
+username : EAP password
+\end{verbatim}
+
+Now restart strongswan (strongswan restart) and start your connection (strongswan up test).
+
+
+\section{Set Up a Matrix Chat Server on Fedora CoreOS with Podman}
+\paragraph{From Fedora Magazine}   
+This was originally published on Fedora Magazine at https://fedoramagazine.org/deploy-your-own-matrix-server-on-fedora-coreos
+
+\subsection{Prerequisites}
+\begin{itemize}
+	\item Synapse
+	\item PostgreSQL
+	\item Nginx
+	\item Let's Encrypt
+	\item Element
+\end{itemize}
+
+\subsection{FCCT Configuration}
+Configuration for the containers are held in an ignition file which is generated by fcct. So, fcct must be installed. A sample configuration is stored on \href{https://github.com/travier/fedora-coreos-matrix}{this GitHub Repository}. 
+
+\subsection{User and SSH Access}
+\begin{lstlisting}
+variant: fcos                     
+version: 1.3.0       
+passwd:           
+  users:      
+    - name: core           
+      ssh_authorized_keys:       
+        - %%SSH_PUBKEY%%
+\end{lstlisting}
+
+\subsection{Cgroups V2}
+\begin{verbatim}
+systemd:                   
+  units:        
+    - name: cgroups-v2-karg.service               
+      enabled: true       
+      contents: |       
+        [Unit]       
+        Description=Switch To cgroups v2                           
+        After=systemd-machine-id-commit.service
+        ConditionKernelCommandLine=systemd.unified_cgroup_hierarchy       
+        ConditionPathExists=!/var/lib/cgroups-v2-karg.stamp       
+        [Service]       
+        Type=oneshot       
+        RemainAfterExit=yes       
+        ExecStart=/bin/rpm-ostree kargs --delete=systemd.unified_cgroup_hierarchy       
+        ExecStart=/bin/touch /var/lib/cgroups-v2-karg.stamp       
+        ExecStart=/bin/systemctl --no-block reboot       
+        [Install]                       
+        WantedBy=multi-user.target       
+                
+\end{verbatim}
+
+\subsection{Podman Pod}
+\begin{lstlisting}
+- name: podmanpod.service       
+  enabled: true       
+  contents: |       
+    [Unit]       
+    Description=Creates a podman pod to run the matrix services.       
+    After=cgroups-v2-karg.service network-online.target       
+    Wants=After=cgroups-v2-karg.service network-online.target       
+    [Service]       
+    Type=oneshot       
+    RemainAfterExit=yes       
+    ExecStart=sh -c 'podman pod exists matrix || podman pod create -n matrix -p 80:80 -p 443:443 -p 8448:8448'       
+    [Install]       
+    WantedBy=multi-user.target
+\end{lstlisting}
+
+\subsection{Web Server with Let's Encrypt}
+Three domains are needed: 
+\begin{itemize}
+\item example.tld: Base homeserver domain
+\item matrix.example.tld: Sub-domain for the Synapse Matrix server
+\item chat.example.tld: Sub-domain for the Element web client 
+
+\end{itemize}
+\begin{lstlisting}
+- name: certbot-firstboot.service
+  enabled: true
+  contents: |
+    [Unit]
+    Description=Run certbot to get certificates
+    ConditionPathExists=!/var/srv/matrix/letsencrypt-certs/archive
+    After=podmanpod.service network-online.target nginx-http.service
+    Wants=network-online.target
+    Requires=podmanpod.service nginx-http.service
+
+    [Service]
+    Type=oneshot
+    ExecStart=/bin/podman run \
+                  --name=certbot \
+                  --pod=matrix \
+                  --rm \
+                  --cap-drop all \
+                  --volume /var/srv/matrix/letsencrypt-webroot:/var/lib/letsencrypt:rw,z \
+                  --volume /var/srv/matrix/letsencrypt-certs:/etc/letsencrypt:rw,z \
+                  docker.io/certbot/certbot:latest \
+                  --agree-tos --webroot certonly
+
+    [Install]
+    WantedBy=multi-user.target
+\end{lstlisting}
+
+Set up NGINX: 
+
+\begin{lstlisting}
+- name: nginx.service
+  enabled: true
+  contents: |
+    [Unit]
+    Description=Run the nginx server
+    After=podmanpod.service network-online.target certbot-firstboot.service
+    Wants=network-online.target
+    Requires=podmanpod.service certbot-firstboot.service
+
+    [Service]
+    ExecStartPre=/bin/podman pull docker.io/nginx:stable
+    ExecStart=/bin/podman run \
+                  --name=nginx \
+                  --pull=always \
+                  --pod=matrix \
+                  --rm \
+                  --volume /var/srv/matrix/nginx/nginx.conf:/etc/nginx/nginx.conf:ro,z \
+                  --volume /var/srv/matrix/nginx/dhparam:/etc/nginx/dhparam:ro,z \
+                  --volume /var/srv/matrix/letsencrypt-webroot:/var/www:ro,z \
+                  --volume /var/srv/matrix/letsencrypt-certs:/etc/letsencrypt:ro,z \
+                  --volume /var/srv/matrix/well-known:/var/well-known:ro,z \
+                  docker.io/nginx:stable
+    ExecStop=/bin/podman rm --force --ignore nginx
+
+    [Install]
+    WantedBy=multi-user.target
+\end{lstlisting}
+
+Set Up Let's Encrypt Renewal: 
+\begin{lstlisting}
+- name: certbot.timer
+  enabled: true
+  contents: |
+    [Unit]
+    Description=Weekly check for certificates renewal
+    [Timer]
+    OnCalendar=Sun --* 02:00:00 
+    Persistent=true
+    [Install]
+    WantedBy=timers.target
+- name: certbot.service
+  enabled: false
+  contents: |
+  [Unit]
+  Description=Let's Encrypt certificate renewal
+  ConditionPathExists=/var/srv/matrix/letsencrypt-certs/archive
+  After=podmanpod.service network-online.target
+  Wants=network-online.target
+  Requires=podmanpod.service
+  [Service]
+  Type=oneshot
+  ExecStart=/bin/podman run \
+                --name=certbot \
+                --pod=matrix \
+                --rm \
+                --cap-drop all \
+                --volume /var/srv/matrix/letsencrypt-webroot:/var/lib/letsencrypt:rw,z \
+                --volume /var/srv/matrix/letsencrypt-certs:/etc/letsencrypt:rw,z \
+                docker.io/certbot/certbot:latest \
+                renew
+  ExecStartPost=/bin/systemctl restart --no-block nginx.service 
+\end{lstlisting}
+
+\subsection{Synapse and Database}
+\begin{lstlisting}
+- name: synapse.service       
+  enabled: true       
+  contents: |       
+    [Unit]       
+    Description=Run the synapse service.       
+    After=podmanpod.service network-online.target                       
+    Wants=network-online.target       
+    Requires=podmanpod.service
+    [Service]       
+    ExecStart=/bin/podman run \
+                  --name=synapse \       
+                  --pull=always  \       
+                  --read-only \       
+                  --pod=matrix \       
+                  --rm \       
+                  -v /var/srv/matrix/synapse:/data:z \       
+                  docker.io/matrixdotorg/synapse:v1.24.0       
+    ExecStop=/bin/podman rm --force --ignore synapse       
+    [Install]            
+    WantedBy=multi-user.target
+\end{lstlisting}
+
+Set up PostgreSQL database in a similar way. Be sure to pass \lstinline{POSTGRES_PASSWORD} in the secret file and declare a systemd service. 
+
+
+\subsection{Set Up Fedora CoreOS Host}
+
+\begin{lstlisting}
+storage:
+  directories:
+    - path: /var/srv/matrix
+      mode: 0700
+    - path: /var/srv/matrix/synapse/media_store
+      mode: 0777
+    - path: /var/srv/matrix/postgres
+    - path: /var/srv/matrix/letsencrypt-webroot
+  trees:
+    - local: synapse
+      path: /var/srv/matrix/synapse
+    - local: nginx
+      path: /var/srv/matrix/nginx
+    - local: nginx-http
+      path: /var/srv/matrix/nginx-http
+    - local: letsencrypt-certs
+      path: /var/srv/matrix/letsencrypt-certs
+    - local: well-known
+      path: /var/srv/matrix/well-known
+    - local: element-web
+      path: /var/srv/matrix/element-web
+  files:
+    - path: /etc/postgresql_synapse
+      contents:
+        local: postgresql_synapse
+      mode: 0700
+\end{lstlisting}
+
+
+\subsection{Set Up Auto-Updates}
+\begin{lstlisting}
+[updates]
+strategy = "periodic"
+
+[[updates.periodic.window]]
+days = [ "Mon", "Tue", "Wed", "Thu", "Fri" ]
+start_time = "02:00"
+length_minutes = 120
+\end{lstlisting}
+
+\subsection{Create The Matrix Server using GitHub Repository}
+To host a server from configuration, values could be filled in the secrets and the configuration generated with fcct using the provided Makefile. 
+\begin{lstlisting}
+$ cp secrets.example secrets
+${EDITOR} secrets
+# Fill in values not marked as generated by synapse
+$ make
+# This will generate the config.ign file
+
+\end{lstlisting}
+
+\subsection{Registering New Users}
+New user registration is disabled by default. But, they can be added manually via the command line: 
+\begin{lstlisting}
+$ sudo podman run --rm --tty --interactive \
+       --pod=matrix \
+       -v /var/srv/matrix/synapse:/data:z,ro \
+       --entrypoint register_new_matrix_user \
+       docker.io/matrixdotorg/synapse:latest \
+       -c /data/homeserver.yaml http://127.0.0.1:8008
+\end{lstlisting}
+
+
+
+\section{Online Privacy}
+\subsection{Remove Firefox Form History}
+Go to settings. Under History, in front of "Firefox will", select "Use custom settings for history". Uncheck "Remember search and form history". 
+
+\section{CPanel}
+\subsection{CPanel SSH Key}
+public/private key pair can be created or imported in CPanel. After that, the key NEEDS TO BE AUTHORIZED MANUALLY from the menu to work. 
+
+\section{Timezone Setting}
+To set timezone on almost any Linux distro, you can create a symbolic link from  a timezone file to localtime. For example, to set timezone to Asia/Tehran, run:   
+\begin{verbatim}
+ln -sf /usr/share/zoneinfo/Asia/Tehran /etc/localtime 
+\end{verbatim}
+
+
+\section{Davinci Resolve}
+\subsection{Add Motion to Video}
+Select the video and then, right click, open in Fusion page. Select the input node in the fusion page, and then OpenFX->ResolveFX Transform->Camera Shake. A new node will be added after the input node, by which we can adjust the camera shake for the clip in question. 
+With the Camera shake node selected, you can access parameters by selecting Inspector. 
+Blanking Handling from Camera Shake handles border type and zoom to crop. 
+
+This functionality is also available from Tools->Transform. 
+
+
+\section{Linux Tricks}
+\subsection{Free Up Space on Linux}
+Learn how to free up space usage Storage analyzer tool on Linux.
+
+\section{Jetpack Compose}
+\subsection{Create a custom theme}
+A theme can be created by calling MaterialTheme and passing colors, typography, shapes, etc to it. 
+
+\subsection{How To Distribute Your Music To Spotify (and others)}
+To distribute music on Spotify, you need to use a distributor that distributes your musical works to different platforms including Spotify. A list of distributors are as follows:  
+\begin{itemize}
+	\item DistroKid 
+	\item CD Baby
+	\item EmuBands
+	\item Record Union
+	\item Vydia
+	\item iGroove
+	
+\end{itemize}
+
+
+\section{Convert CentOS Linux to CentOS Stream}
+Run these instructions to convert a CentOS Linux to CentOS Stream:
+\begin{lstlisting}
+  dnf swap centos-linux-repos centos-stream-repos
+  dnf distro-sync
+\end{lstlisting}
+
+\section{Photography}
+\subsection{Smartphone Photography Tips}
+Here are some tips for better photography with a smartphone:
+\begin{itemize}
+	\item Fill the frame (with your subject)
+	\item Leading lines: Try to capture lines that lead to the subject)
+	\item Rule of third: Center the subject in the golden spot
+	\item Rule of odds: When capturing a group of items, an odd number of them look better
+	\item Symmetry
+	\item Frame Within Frame: Put the subject inside a frame, that is in turn in your photo frame e.g. subject standing in front of a door
+\end{itemize}
+
+\section{Windows Tips}
+  \subsection{Backing up Windows apps}
+  To back up Windows apps, for instance, before doing a system upgrade, you can use EaseUS Todo PCTrans application. It supports backing up over an external or internal medium or a device on the network.
+  \subsection{Mirroring images in PowerPoint and Word}
+     You can do this using Right Click->Format Picture->3D rotation around X-axis
+  \subsection{Install packages from Terminal like Linux}
+  Use Chocolatey
+  \subsection{Unable to Mount Windows Partitions Read-Write in Linux}
+    The reason is likely because fast-startup (Hybrid-shutdown) is on in Windows. 
+    Boot into Windows and disable it from Power Options. Boot back to Linux and the NTFS partition will mount read-write. 
+
+  \subsection{Mount NTFS Partitions Automatically using Systemd in Linux}
+    Create mount files under /etc/systemd/system and add the following content:
+    \begin{lstlisting}
+      [Unit]
+      Description=Mount unit for mounting second disk partition 1
+      #Before=snapd.service
+      #After=zfs-mount.service
+      
+      [Mount]
+      What=/dev/sdb1
+      Where=/run/media/mehdi/Ba1
+      #Type=NTFS
+      Options=defaults
+      LazyUnmount=yes
+      
+      
+      [Install]
+      WantedBy=multi-user.target
+           
+    \end{lstlisting}
+    It is said the components of the mount file name must be according to path parts. I'm not sure about this. 
+
+    \subsection{Run Fedora Linux inside WSL2}
+    This part uses Fedora Magazine article written by Jim Perrin (https://fedoramagazine.org/wsl-fedora-33/)
+
+    
+   
+      \begin{itemize}
+        \item Download Fedora rootfs from (\href{https://github.com/fedora-cloud/docker-brew-fedora/tree/35/x86_64}{Fedora Cloud}) unzip it from tar.xz to tar and run \lstinline{wsl --import Fedora-35 C:\distros\Fedora-35 $HOME\Downloads\rootfs.tar}
+        
+        \item Run "wsl -l" to verify it is added
+        \item Start Fedora with "wsl -d Fedora-35"
+        \item Update Fedora and install " wget curl sudo ncurses dnf-plugins-core dnf-utils passwd findutils"
+        \item Add user \lstinline{useradd -G wheel username && passwd username} (Replace username with your username)
+        \item Start Fedora with your username \lstinline{wsl -d Fedora-35 -u username}
+        \item To make WSL 2 start with a default user we created, run \lstinline{Get-ItemProperty Registry::HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Lxss\*\ DistributionName | Where-Object -Property DistributionName -eq Fedora-33  | Set-ItemProperty -Name DefaultUid -Value 1000} in PowerShell
+        
+      \end{itemize}
+
+  \subsection{Cygwin}
+  \subsubsection{Installing Cygwin}
+  Grab the installer and run it, while selecting some minimal set of packages to install. 
+  \subsubsection{Install apt-cyg Package Manager for Cygwin} 
+  Go to https://github.com/transcode-open/apt-cyg to see the details. 
+  Basically, go to the root of cygwin (cd /) and to install run
+  \begin{lstlisting}
+    lynx -source rawgit.com/transcode-open/apt-cyg/master/apt-cyg > apt-cyg
+    install apt-cyg /bin
+  \end{lstlisting}
+  
+  
+
+  \section{NetBeans}
+
+    \subsection{Changing JDK path}
+     If NetBeans fails to start due to incorrect JDK path, you can change the JDK path in the 
+     \lstinline{netbeans/etc/netbeans.conf} file located in NetBeans installation directory.
+     Find \lstinline{netbeans_jdkhome} and change its value to a working JDK home.
+
+
+
+
+\section{OS Tricks}
+\subsection{Exclude Files and Folders with Zip}
+The following command excludes file patterns and folders using zip.
+\begin{verbatim}
+zip -r deploy-final.zip final --exclude \*session --exclude \*env.ini --exclude \*.pyc --exclude \*.db
+
+\end{verbatim}
+
+\subsection{Enter Unicode Symbols on Window, Linux, and macOS}
+On Windows, enter the character e.g. 03b1. Then, press ALT and then Hit X. 
+On Linux, press Ctrl+Shift and then enter the unicode code. Then, press enter
+On macOS, I don't know yet
+
+\section{PDF}
+
+\subsection{Output PDF Content as Image}
+This helps create a BMP format of pdf pages. You can use Scribus software, which allows you to export (File->Export) the file content as images.
+
+\subsection{Generate PDF from a Bunch of Images}
+First install imagemagick from your Linux distribution. Then run the following command to generate a file made of the images.
+
+\subsection{Batch Image Conversion}
+To convert multiple images to WebP, you can use the following command:
+\begin{verbatim}
+for file in *.jpg; do newfile="${file%.*}.webp"; magick $file $newfile; done
+\end{verbatim}
+The part inside \lstlstine{${}} removes the extension from the filename.
+
+
+\begin{lstlisting}
+convert file1.jpg file2.jpg *.jpeg output.pdf
+\end{lstlisting}
+
+\section{Voice Recognition}
+\subsection{Speech To Text}
+\subsubsection{VOSK}
+Vosk is a Python library for speech to text transcription supporting many languages. 
+Can be installed with pip.
+\subsubsection{MBROLA}
+A speech synthesizer that synthesizes sound from text.
+
+\subsection{Personal Voice Assistant}
+Personal voice assistant for Linux by Cyborgscode. 
+
+\subsection{Open LiteSpeed}
+\subsubsection{Enable domain level php.ini}
+Go to Server Configuration -> External App. Then, add PHP_INI_SCAN_DIR to $VH_ROOT.
+
+\section{Open Street Map}
+
+\subsection{Offline Map using Mapsforge}
+MapsForge allows using Open Street maps in offline mode using .map file format.
+These files can be created or downloaded from Mapsforge download server. The following Android code shows how to pick a map file from the device memory and load the map based on the file.
+\begin{lstlisting}
+class MainActivity : AppCompatActivity() {
+    private lateinit var mapView: MapView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        AndroidGraphicFactory.createInstance(application)
+
+        mapView = MapView(this)
+        
+        setContentView(mapView)
+
+        val openMap = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result: ActivityResult ->
+            if(result.resultCode == RESULT_OK){
+                if(result.data != null){
+                    try{
+                        mapView.mapScaleBar.isVisible = true
+                        mapView.setBuiltInZoomControls(true)
+
+
+                        val cache = AndroidUtil.createTileCache(this,
+                            "mapcache",
+                            mapView.model.displayModel.tileSize,
+                            1f,
+                            mapView.model.frameBufferModel.overdrawFactor
+                        )
+
+                        val inStream = contentResolver.openInputStream(result.data!!.data!!) as FileInputStream
+                        val mapDataStore = MapFile(inStream)
+                        val tileRendererLayer = TileRendererLayer(
+                            cache,
+                            mapDataStore,
+                            mapView.model.mapViewPosition,
+                            AndroidGraphicFactory.INSTANCE
+                        )
+                        tileRendererLayer.setXmlRenderTheme(
+                            InternalRenderTheme.DEFAULT
+                        )
+
+                        mapView.setCenter(LatLong(32.4279, 53.6880))
+                        mapView.setZoomLevel(12)
+
+                    }catch(e:Exception){
+                        Log.e("MainActivity", "onCreate: $e" )
+                    }
+                }
+            }
+        }
+        val intent = Intent(Intent.ACTION_GET_CONTENT).apply{
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "*/*"
+        }
+        openMap.launch(intent)
+    }
+
+
+    override fun onDestroy() {
+        mapView.destroyAll()
+        AndroidGraphicFactory.clearResourceMemoryCache()
+        super.onDestroy()
+
+    }
+}
+
+\end{lstlisting}
+
+\section{Computer Troubleshooting}
+\subsection{Windows}
+
+\subsection{Mac}
+\subsubsection{Installing Windows on Mac M1 and M2}
+Windows 10 is not supported on the M models of Mac which are ARM-based. A special pience of software called Parallels Desktop for Mac is required for installing Windows 11 on the Mac.
+
+\subsection{Linux}
+
+\subsection{Haproxy}
+Haproxy is a load balancer that allows running several backends behind the 
+same port on a server. For example, a vpn server and be run at the same 
+time with a web server both listening port 443. An example configuration 
+follows as stored in /etc/haproxy/haproxy.conf.
+\begin{verbatim}
+  frontend https
+   bind x.x.x.x:443
+   mode tcp
+   tcp-request inspect-delay 5s
+   tcp-request content accept if { req_ssl_hello_type 1 }
+   use_backend apache if { req_ssl_sni -i example.com }
+   use_backend ocserv if { req_ssl_sni -i vpn.example.com }
+
+   default_backend ocserv
+
+backend ocserv
+   mode tcp
+   option ssl-hello-chk
+   server ocserv 127.0.0.1:443 send-proxy-v2
+   server ocserv6 [::1]:443 send-proxy-v2
+backend apache
+   mode tcp
+   option ssl-hello-chk
+   server apache 127.0.0.2:443 check
+\end{verbatim}
+
+\subsection{Fedora}
+\subsubsection{Use Iranian Fedora Mirror}
+In case you have problem accessing Fedora repositories for updates and releases, you can take the following steps to switch to high-speed Iranian mirrors:  
+
+\begin{itemize}
+	\item Run "dnf repolist --enabled" to see the list of currently enabled repositories
+	\item Run "dnf config-manager -set-disabled" followed by the names of repositories you want to disable like fedora, fedora-updates, etc.
+	\item Create a file called iranrepo.repo under /etc/yum.repos.d/ with the following content: 
+	\begin{lstlisting}
+	[iranrepo-fedora-updates]
+name=iranrepo-fedora-updates
+baseurl=https://rpm.iranrepo.ir/fedora/linux/updates/$releasever/Everything/$basearch/
+enabled=1
+gpgcheck=0
+
+[iranrepo-fedora-releases]
+name=iranrepo-fedora-releases
+baseurl=https://rpm.iranrepo.ir/fedora/linux/releases/$releasever/Everything/$basearch/
+enabled=1
+gpgcheck=0
+
+
+[iranrepo-centos-docker]
+name=iranrepo Docker CE Stable - $basearch
+baseurl=https://rpm.iranrepo.ir/centos/$releasever/$basearch/stable
+enabled=1
+gpgcheck=1
+gpgkey=https://rpm.iranrepo.ir/linux/centos/gpg
+	\end{lstlisting}
+	\item Run "dnf update" to start updating
+\end{itemize}
+
+\section{Git}
+\subsection{Configure Line Endings}
+To configure git to handle file endings automatically on Windows, Mac, and Linux, run the following command:
+\begin{verbatim}
+git config --global core.autocrlf true
+\end{verbatim}
+To make sure git treats the repository reasonably on all OSes, a .gitattributes file with the following content can be created:
+\begin{verbatim}
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=auto
+
+# Explicitly declare text files you want to always be normalized and converted
+# to native line endings on checkout.
+*.c text
+*.h text
+
+# Declare files that will always have CRLF line endings on checkout.
+*.sln text eol=crlf
+
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.jpg binary
+\end{verbatim}
+\subsection{Ignore File Permissions Change}
+File mode changes appear when switching between Linux and Windows on the same machine. For example the mode for a file on Linux was 001234, but on Windows it appears as 051234. This causes git to show a lot of differences although you might have just committed the latest changes. To ignore such changes, run the following command:
+\begin{verbatim}
+git config --global core.fileMode false
+\end{verbatim}
+
+To refresh the repo after making changes, run the following command:
+\begin{verbatim}
+git rm --cached .
+git reset --hard
+\begin{verbatim}
+
+
+\section{Qt Development}
+\subsection{Setup on macOS}
+\begin{enumerate}
+	\item brew install qt
+	\item brew install cmake
+	\item brew install extra-cmake-modules
+	\item Download and install Qt Creator from qt.io
+	\item Configure Qt Kits and specify path to Qt like /opt/homebrew/Cellar/qt/6.7.0_1
+\end{enumerate}	
+
+\end{document}
+

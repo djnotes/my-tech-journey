@@ -1,0 +1,292 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Bash}{1}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Write Multiple Lines to File from STDIN}{1}{subsection.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}SSH}{1}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Changing default SSH Port}{1}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}USE SSH Connection as a Socks Proxy Server}{1}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Installing VNC Server on CentOS 7}{1}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Installing AnyDesk on CentOS 7}{2}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Installing php, httpd and mysql on CentOS 7}{2}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Creating virtual hosts to host multiple sites on a single server}{2}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}PPTP on Centos 7}{3}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Video Editing}{3}{section.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.1}Download Part of a video with FFMPEG and Youtube-dl}{3}{subsection.8.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.2}Channel Mapping with FFmpeg}{3}{subsection.8.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3}2-Pass Size-Oriented Video Encoding With FFMPEG}{4}{subsection.8.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.4}Audio Visualization with FFMPEG}{4}{subsection.8.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}Adding SSL to your site}{4}{section.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10}Free images}{4}{section.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {11}Increase audio volume with ffmpeg}{4}{section.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {12}Configuring NoMachine NX Server}{5}{section.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {13}How to create a systemd module}{5}{section.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {14}Containers and Kubernetes}{5}{section.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.1}Autocompletion for kubectl and minikube}{6}{subsection.14.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.2}Docker Compose Tips}{6}{subsection.14.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.3}Install Podman on Ubuntu}{6}{subsection.14.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.4}Container Data Volumes}{6}{subsection.14.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Data Volumes Benefits}{7}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Docker Links}{7}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.5}Managing Containers with Systemd}{7}{subsection.14.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.6}Deploy A Registry Server}{7}{subsection.14.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.7}Fix Docker Directory Permission Issues}{8}{subsection.14.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.8}Docker Volumes}{8}{subsection.14.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.9}Wordpress Error: Cannot Create Directory}{8}{subsection.14.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.10}Enable Communication with External Networks}{8}{subsection.14.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.11}Install ping}{9}{subsection.14.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.12}Communication between Pod Containers and the Host}{9}{subsection.14.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.13}Expose Docker Apps via Reverse Proxy}{9}{subsection.14.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.14}How to Set Up A Containerized PHP-FPM Service}{9}{subsection.14.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.15}Set Up PHP-FPM with Apache (Easier Way)}{10}{subsection.14.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.16}Create a FPM-HTTPD-Alpine}{11}{subsection.14.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.17}Set Up a Containerized FPM Service for NGINX}{12}{subsection.14.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.18}Generate Pod YAML with Podman}{13}{subsection.14.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.19}Debugging Containerized Python App with VSCode}{14}{subsection.14.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.20}Podman Remote Client on Mac}{14}{subsection.14.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.21}Set Up Build and Push CI Workflow for Docker Hub and GHCR}{15}{subsection.14.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.22}Set Up Docker Action To Deploy Containers to Remote Server}{16}{subsection.14.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.23}Docker Compose with Podman Backend}{16}{subsection.14.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.24}Convert Docker Compose to Kubernetes}{17}{subsection.14.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.25}Share a volume between two pods}{17}{subsection.14.25}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.26}Replace Docker with Podman on macOS}{18}{subsection.14.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {14.27}Ingress}{19}{subsection.14.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {14.27.1}Set-up on Minikube}{19}{subsubsection.14.27.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {15}FFMPEG}{19}{section.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Adding colorbalance filters with ffmpeg}{19}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Color Levels}{19}{section*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Bash Code to Create Instagram Clips from one Video File}{20}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {16}On IELTS}{20}{section.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {17}Creating a PHP extension}{20}{section.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {18}Working with Alsa Connections}{20}{section.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {19}Ardour}{20}{section.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {19.1}Ardour MIDI Setup}{20}{subsection.19.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {20}VST Plugins}{20}{section.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {21}Working With Carla}{21}{section.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Play A WAV File}{21}{section*.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {22}ZMQ For PHP}{21}{section.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {23}RabbitMQ for PHP}{21}{section.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {24}Building an OpenVPN Server}{21}{section.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {25}Add socks proxy to Gradle}{23}{section.25}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {26}Free APIs}{23}{section.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {27}Selinux Fixes}{23}{section.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {28}Using web fonts}{23}{section.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {29}Wordpress}{24}{section.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {29.1}Installing Wordpress Plugins Directly Without FTP}{24}{subsection.29.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {29.2}Add Wordpress Pages with Category}{24}{subsection.29.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subparagraph}{Fix 404 Error for Wordpress}{24}{section*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {29.3}Create Child Themes}{24}{subsection.29.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {30}Sending Files to Servers with RSYNC}{24}{section.30}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {31}Moving Wordpress to Production}{25}{section.31}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {31.1}Enable Pretty Links in WordPress}{25}{subsection.31.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {32}How to Cut Areas Around Selected Parts In An Image}{25}{section.32}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {33}Android}{26}{section.33}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {33.1}Change default Emulator Dir in Windows}{26}{subsection.33.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {33.2}Share A File in Android}{26}{subsection.33.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {33.3}Testing}{26}{subsection.33.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {33.4}Deep Links}{26}{subsection.33.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {33.5}Working with sdkmanager Tool}{27}{subsection.33.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {33.6}Jetpack Compose}{27}{subsection.33.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {33.6.1}Material 3}{27}{subsubsection.33.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {33.6.2}Testing}{27}{subsubsection.33.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {33.6.3}Dependencies}{27}{subsubsection.33.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {33.6.4}Components}{27}{subsubsection.33.6.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {33.6.5}Compose Test Rule}{28}{subsubsection.33.6.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {33.6.6}Avoid String Hardcoding}{28}{subsubsection.33.6.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {33.6.7}Testing In Isolation}{28}{subsubsection.33.6.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {33.6.8}Time Manipulation}{28}{subsubsection.33.6.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {33.6.9}Prevent }{28}{subsubsection.33.6.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {33.7}Date/Time Manipulation}{28}{subsection.33.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {33.7.1}Get Unix Timestamp}{28}{subsubsection.33.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {33.7.2}Convert Unix Timestamp to String Time}{28}{subsubsection.33.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {33.8}Shared Element Transition With RecyclerView}{28}{subsection.33.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {33.9}Loading html files from Assets}{28}{subsection.33.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {33.10}Searching For Files}{29}{subsection.33.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {33.11}Highlighting Text}{29}{subsection.33.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {33.12}Moving Cursor in Text}{29}{subsection.33.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {33.13}Different Line Heights in English and Persian Text}{29}{subsection.33.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {33.14}Creating side line numbers for your text editor}{29}{subsection.33.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {33.15}View Binding}{29}{subsection.33.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {33.16}Cast Android Device to Linux and Control from There}{30}{subsection.33.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {33.17}Android Animations}{30}{subsection.33.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {33.17.1}Spring Animation}{30}{subsubsection.33.17.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {33.18}MotionLayout}{30}{subsection.33.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {33.18.1}Keyframe Tags}{30}{subsubsection.33.18.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {34}SQLITE}{31}{section.34}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {35}Apache}{31}{section.35}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {35.1}Adding Free SSL to Apache}{31}{subsection.35.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {35.2}Add SSL Redirect}{31}{subsection.35.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {36}MakeHuman}{31}{section.36}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {37}Mail Server Suite (Postfix-Dovecot, Roundcube)}{32}{section.37}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {37.1}Postfix}{32}{subsection.37.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {37.2}Dovecot}{34}{subsection.37.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {37.3}RoundCube}{36}{subsection.37.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {38}Android Web Apps}{37}{section.38}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {38.1}Chrome Custom Tabs}{37}{subsection.38.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {38.2}TWA(Trusted Web Activity)}{37}{subsection.38.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {38.3}Meta tags and icon for iOS}{37}{subsection.38.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {38.4}Service Workers}{37}{subsection.38.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {38.5}TWA Prerequisites}{37}{subsection.38.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {38.6}Full Screen Capability in TWA}{38}{subsection.38.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {38.7}Generate Signing Keys with Keytool}{38}{subsection.38.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {38.8}Create Asset Links File}{38}{subsection.38.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {39}Amazon AWS}{38}{section.39}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {39.1}Host Static Sites with AWS}{38}{subsection.39.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {40}Blender}{38}{section.40}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {40.1}Modify Materials with Node Editors}{38}{subsection.40.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {40.2}Python Scripting in Blender}{38}{subsection.40.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {41}Unreal Engine}{39}{section.41}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {41.1}Localization}{39}{subsection.41.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {41.2}UE Game Install Location}{39}{subsection.41.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {41.3}Publish Android Games with Data Files on Google Play}{39}{subsection.41.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {42}Android Audio Programming}{39}{section.42}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {42.1}Oboe}{39}{subsection.42.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {43}Telethon}{40}{section.43}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {44}Python}{40}{section.44}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {44.1}Installing packages}{40}{subsection.44.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {44.2}Use pip3 in the Virtual Environment}{40}{subsection.44.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {44.3}FFMPEG encoding using Python}{40}{subsection.44.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {44.4}Colab}{41}{subsection.44.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {45}Composer}{41}{section.45}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {45.1}How Composer Version Matching Works}{41}{subsection.45.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {46}MadelineProto}{41}{section.46}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {46.1}Starter Code}{41}{subsection.46.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {46.2}Logging}{41}{subsection.46.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {47}HTML/CSS}{42}{section.47}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {47.1}How to display an element's children horizontally}{42}{subsection.47.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {48}Drupal}{42}{section.48}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {48.1}Installing Drupal}{42}{subsection.48.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {49}React}{42}{section.49}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {49.1}Add React to An Existing Web Page (Any Language)}{42}{subsection.49.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {50}Let's Encrypt TLS}{43}{section.50}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {50.1}certbot-auto}{43}{subsection.50.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {51}Flutter}{44}{section.51}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {51.1}Loading Images}{44}{subsection.51.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {51.2}Load Assets in Android}{44}{subsection.51.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {51.3}Updating Launch Icon}{44}{subsection.51.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {51.4}Add Launch Screen}{44}{subsection.51.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {51.5}Opening Screens and Returning Results}{44}{subsection.51.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {51.6}SnackBar in Flutter}{45}{subsection.51.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {51.7}Form Fields in Flutter}{45}{subsection.51.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {52}Course Creation}{49}{section.52}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {52.1}Requirements of a Successful Course}{49}{subsection.52.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {53}Sound and Music}{49}{section.53}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {53.1}Tips From A Mix Enginner}{49}{subsection.53.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {53.2}Passing onTap To Widgets}{50}{subsection.53.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {54}Build Telegram Bots with Python}{50}{section.54}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {54.1}Pyrogram}{50}{subsection.54.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {54.2}Multi-Session App with Pyrogram}{51}{subsection.54.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {54.3}Using Multiple Session Files with The Same Account}{52}{subsection.54.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {54.4}Using Async Code with Pyrogram}{52}{subsection.54.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {54.5}Mariadb Database for Python}{52}{subsection.54.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {54.6}Multi-Session Pyrogram}{53}{subsection.54.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {55}Vagrant}{53}{section.55}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {56}Python}{53}{section.56}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {56.1}ORM Systems for Python}{53}{subsection.56.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {56.2}Reloading A Module with reloader}{53}{subsection.56.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {56.3}Object Serialization/Deserialization}{54}{subsection.56.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {56.4}Multi-Threading}{54}{subsection.56.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {57}OBS}{54}{section.57}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {57.1}How to Record Desktop Output Audio On the Video}{54}{subsection.57.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {57.2}How to Hide Background without Chroma Key}{55}{subsection.57.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {58}Server Time and Date Settings}{55}{section.58}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {59}Telegram}{55}{section.59}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {59.1}Group and Channel Members}{55}{subsection.59.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {60}Google Cloud Services}{55}{section.60}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {60.1}Google Speech Recognition with Python}{55}{subsection.60.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {60.2}Upload Files to Google Storage using Python}{56}{subsection.60.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {61}Good Emoji Support for VS Code on Linux}{57}{section.61}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {62}VPN Technologies}{57}{section.62}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {62.1}Set Up An OpenConnect VPN Server - Courtesy of LinuxBabe.com (Create OpenConnect VPN Server)}{57}{subsection.62.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {62.2}Configuration}{57}{subsection.62.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {62.3}Create VPN Accounts}{58}{subsection.62.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {62.4}Firewall Settings}{58}{subsection.62.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {62.5}Firewall Settings (Fedora/CentOS)}{59}{subsection.62.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {62.6}Enable Auto-Renew for Certificates}{59}{subsection.62.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {62.7}Starting VPN with Systemd}{59}{subsection.62.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {62.8}Enable IPv6 for VPN}{60}{subsection.62.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {62.9}Troubleshooting OpenConnect VPN}{60}{subsection.62.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {62.9.1}Using custom ports}{60}{subsubsection.62.9.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {62.9.2}Enable debugging on the server}{60}{subsubsection.62.9.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {62.10}Creating an OpenVPN Server}{60}{subsection.62.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Prerequisites}{60}{section*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Install OpenVPN}{60}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Configure OpenVPN}{60}{section*.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Generate Keys and Certificates}{60}{section*.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Routing}{61}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Starting OpenVPN}{61}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Configuring a client}{61}{section*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {62.11}Set up a PPTP VPN on CentOS}{61}{subsection.62.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {62.12}Setting Up IKEV2 VPN on Fedora}{61}{subsection.62.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {63}Set Up a Matrix Chat Server on Fedora CoreOS with Podman}{61}{section.63}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{From Fedora Magazine}{61}{section*.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {63.1}Prerequisites}{61}{subsection.63.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {63.2}FCCT Configuration}{62}{subsection.63.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {63.3}User and SSH Access}{62}{subsection.63.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {63.4}Cgroups V2}{62}{subsection.63.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {63.5}Podman Pod}{62}{subsection.63.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {63.6}Web Server with Let's Encrypt}{63}{subsection.63.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {63.7}Synapse and Database}{65}{subsection.63.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {63.8}Set Up Fedora CoreOS Host}{66}{subsection.63.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {63.9}Set Up Auto-Updates}{66}{subsection.63.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {63.10}Create The Matrix Server using GitHub Repository}{66}{subsection.63.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {63.11}Registering New Users}{67}{subsection.63.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {64}Online Privacy}{67}{section.64}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {64.1}Remove Firefox Form History}{67}{subsection.64.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {65}CPanel}{67}{section.65}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {65.1}CPanel SSH Key}{67}{subsection.65.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {66}Timezone Setting}{67}{section.66}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {67}Davinci Resolve}{67}{section.67}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {67.1}Add Motion to Video}{67}{subsection.67.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {68}Linux Tricks}{68}{section.68}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {68.1}Free Up Space on Linux}{68}{subsection.68.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {69}Jetpack Compose}{68}{section.69}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {69.1}Create a custom theme}{68}{subsection.69.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {69.2}How To Distribute Your Music To Spotify (and others)}{68}{subsection.69.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {70}Convert CentOS Linux to CentOS Stream}{68}{section.70}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {71}Photography}{68}{section.71}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {71.1}Smartphone Photography Tips}{68}{subsection.71.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {72}Windows Tips}{69}{section.72}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {72.1}Mirroring images in PowerPoint and Word}{69}{subsection.72.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {72.2}Install packages from Terminal like Linux}{69}{subsection.72.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {72.3}Unable to Mount Windows Partitions Read-Write in Linux}{69}{subsection.72.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {72.4}Mount NTFS Partitions Automatically using Systemd in Linux}{69}{subsection.72.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {72.5}Run Fedora Linux inside WSL2}{69}{subsection.72.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {72.6}Cygwin}{70}{subsection.72.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {72.6.1}Installing Cygwin}{70}{subsubsection.72.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {72.6.2}Install apt-cyg Package Manager for Cygwin}{70}{subsubsection.72.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {73}NetBeans}{70}{section.73}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {73.1}Changing JDK path}{70}{subsection.73.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {74}OS Tricks}{70}{section.74}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {74.1}Enter Unicode Symbols on Window, Linux, and macOS}{70}{subsection.74.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {75}PDF}{70}{section.75}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {75.1}Output PDF Content as Image}{70}{subsection.75.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {75.2}Generate PDF from a Bunch of Images}{71}{subsection.75.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {76}Voice Recognition}{71}{section.76}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {76.1}Speech To Text}{71}{subsection.76.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {76.1.1}VOSK}{71}{subsubsection.76.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {76.1.2}MBROLA}{71}{subsubsection.76.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {76.2}Personal Voice Assistant}{71}{subsection.76.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {77}Open Street Map}{71}{section.77}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {77.1}Offline Map using Mapsforge}{71}{subsection.77.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {78}Computer Troubleshooting}{73}{section.78}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {78.1}Windows}{73}{subsection.78.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {78.2}Mac}{73}{subsection.78.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {78.2.1}Installing Windows on Mac M1 and M2}{73}{subsubsection.78.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {78.3}Linux}{73}{subsection.78.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {78.4}Haproxy}{73}{subsection.78.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {78.5}Fedora}{73}{subsection.78.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {78.5.1}Use Iranian Fedora Mirror}{73}{subsubsection.78.5.1}\protected@file@percent }
+\gdef \@abspage@last{74}
